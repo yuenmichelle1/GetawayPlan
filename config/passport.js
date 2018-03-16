@@ -1,3 +1,5 @@
+var express= require("express");
+var app = express();
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 
@@ -44,6 +46,7 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
+app.use(passport.initialize());
 
 // Exporting our configured passport
 module.exports = passport;

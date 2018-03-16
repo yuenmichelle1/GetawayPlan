@@ -13,6 +13,7 @@ router.post("/api/signup", function(req, res) {
     console.log(result);
     res.redirect(307, "/api/login");
   });
+  console.log(req.body);
 });
 
 // put route -> back to index
