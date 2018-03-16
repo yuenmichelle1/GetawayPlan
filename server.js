@@ -25,12 +25,12 @@ require("./routes/htmlroutes.js")(app);
 require("./routes/apiRoutes.js")(app);
 
 //***** UNCOMMENT WHEN WE HAVE A CONTROLLER TO WORK WITH
-// var routes = require("./controllers/");
+var routes = require("./controllers/userController");
 
-// app.use(routes);
-// app.use("/", routes);
-// app.use("/update", routes);
-// app.use("/create", routes);
+app.use(routes);
+app.use("/", routes);
+app.use("/update", routes);
+app.use("/create", routes);
 // listen on port 3000 
 // ***
 
