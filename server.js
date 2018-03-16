@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var path = require("path")
+var path = require("path");
+var session = require("express-session");
 var db = require("./models");
 var passport = require("./config/passport");
 
@@ -18,6 +19,11 @@ app.engine("handlebars", exphbs({
   defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
+
+// Requiring our routes
+require("./routes/htmlroutes.js")(app);
+require("./routes/apiRoutes.js")(app);
+
 //***** UNCOMMENT WHEN WE HAVE A CONTROLLER TO WORK WITH
 // var routes = require("./controllers/");
 
