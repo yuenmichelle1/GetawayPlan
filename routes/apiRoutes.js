@@ -19,7 +19,9 @@ module.exports = function(app) {
     console.log(req.body);
     db.User.create({
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      phoneNumber: req.body.phoneNumber,
+      wantsTextNotification: req.body.wantsTextNotification
     }).then(function() {
       res.redirect(307, "/api/login");
     }).catch(function(err) {
