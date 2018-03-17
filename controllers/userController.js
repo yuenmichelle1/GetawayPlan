@@ -18,4 +18,4 @@ router.post("/api/signup", function(req, res) {
 
 // put route -> back to index
 
-module.exports = router;
+// module.exports = router;
