@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
+        crossorigin='anonymous'>
+    <title>Create A New Trip</title>
+</head>
+
+<body>
+
+    <body>
+        <div id="locationField">
+            <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+        </div>
+
+        <table id="address">
+            <tr>
+                <td class="label">Street address</td>
+                <td class="slimField">
+                    <input class="field" id="street_number" disabled="true"></input>
+                </td>
+                <td class="wideField" colspan="2">
+                    <input class="field" id="route" disabled="true"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">City</td>
+                <!-- Note: Selection of address components in this example is typical.
+                         You may need to adjust it for the locations relevant to your app. See
+                         https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+                    -->
+                <td class="wideField" colspan="3">
+                    <input class="field" id="locality" disabled="true"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">State</td>
+                <td class="slimField">
+                    <input class="field" id="administrative_area_level_1" disabled="true"></input>
+                </td>
+                <td class="label">Zip code</td>
+                <td class="wideField">
+                    <input class="field" id="postal_code" disabled="true"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Country</td>
+                <td class="wideField" colspan="3">
+                    <input class="field" id="country" disabled="true"></input>
+                </td>
+            </tr>
+        </table>
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src="assets/js/tripForm.js"></script>
+    </body>
+
+</html>
