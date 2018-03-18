@@ -1,63 +1,112 @@
 $(function () {
+    //replace chicago with other info
+    var tripAddress = "chicago";
 
-    var tripAddress = "chicago"
-    var geoApiKey;
     var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
-            
+    //comment out the return in the getPhotoURLByReference function to save api key usage when testing
+    var getPhotoURLByReference = function (ref) {
+        // return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${ref}&key=${googlePlaceApiKey}`;
+    };
+
+    var addNewRestuarantRows = function (response) {
+        var result = response.results;
+        //change how many result to show. 20 max for one call. 60 max total (3 calls)
+        for (var i = 0; i < 3; i++) {
+            var photoRef = result[i].photos[0].photo_reference;
+            var photoURL = getPhotoURLByReference(photoRef);
+            var restInfo = {
+                "data-restname": result[i].name,
+                "data-restrating": `Rating: ${result[i].rating}/5`,
+                "data-restaddress": result[i].vicinity,
+                "data-photourl": photoURL
+            }
+            var newRestDiv = $("<div class='row restaurant'>");
+            var photo_col = $("<div class='col-md-3'>")
+            var info_col = $("<div class='col-md-3'>")
+            var select_col = $("<div class='col-md-6'>")
+
+            addInfoToCols(restInfo, photo_col, info_col);
+            addSaveButton(restInfo, select_col)
+
+            newRestDiv.append(photo_col, info_col, select_col)
+            $(".diningOptions").append(newRestDiv);
+        }
+    }
+    var addInfoToCols = function (restInfo, photo_col, info_col) {
+        var restNameDiv = $("<h4>").text(restInfo["data-restname"]);
+        var restAddressDiv = $("<p>").text(restInfo["data-restaddress"]);
+        var restRatingDiv = $("<p>").text(restInfo["data-restrating"]);
+        var imgDiv = $(`<img src=${restInfo["data-photourl"]} alt="restaurant-photo">`);
+        photo_col.append(imgDiv);
+        info_col.append(restNameDiv, restAddressDiv, restRatingDiv);
+
+    }
+
+    var addSaveButton = function (restInfo, select_col) {
+        var button = $("<button class='btn-primary saveRestaurant'>").text("Save");
+        button.attr(restInfo);
+        select_col.append(button);
+    }
+
+    var addGetMoreBtn = function (btnClass) {
+        var moreSuggestionButton = $(`<button class='btn-primary btn-block ${btnClass}'>`).text("Show me more");
+        $(".diningOptions").append(moreSuggestionButton);
+    }
+
+    var saveRestaurant = function () {
+        $(".diningOptions").on("click", ".saveRestaurant", function () {
+            var info = {
+                restname: $(this).data("restname"),
+                restrating: $(this).data("restrating"),
+                restaddress: $(this).data("restaddress"),
+                photourl: $(this).data("photourl")       
+            };
+
+        })
+    }
+    saveRestaurant();
+
     $.ajax({
         url: queryURL_geo,
         method: "GET"
     }).done(function (response) {
-            var geo = response.results[0].geometry.location;
-            var geoLocation = `${geo.lat},${geo.lng}`
+        var geo = response.results[0].geometry.location;
+        var geoLocation = `${geo.lat},${geo.lng}`
+        var queryURL_food = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${geoLocation}&radius=500&type=restaurant&rankby=prominence&key=${googlePlaceApiKey}`;
+        $.ajax({
+            url: queryURL_food,
+            method: "GET"
+        }).done(function (response) {
+            var page2token = response.next_page_token;
+            addNewRestuarantRows(response);
+            addGetMoreBtn("getMoreBtn");
 
-            var getPhotoURLByReference = function(ref){
-                return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${ref}&key=${googlePlaceApiKey}`;
-            };
-            var corsfix = "https://cors-anywhere.herokuapp.com/";
-            var googlePlaceApiKey;
-            var type = "restaurant";
-            var queryURL_food = `${corsfix}https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${geoLocation}&radius=500&type=${type}&rankby=prominence&key=${googlePlaceApiKey}`;
-            
-            $.ajax({
-                    url: queryURL_food,
+            $(".diningOptions").on("click", ".getMoreBtn", function () {
+                $.ajax({
+                    url: `${queryURL_food}&pagetoken=${page2token}`,
                     method: "GET"
                 }).done(function (response) {
-                        var result = response.results;
+                    var page3token = response.next_page_token;
+                    $(".getMoreBtn").remove();
+                    addNewRestuarantRows(response);
+                    addGetMoreBtn("getMoreBtn2");
 
-                        console.log(result)
-                        for (var i = 0; i < 2; i++) {
-                    
-                            var photoRef = result[i].photos[0].photo_reference;
-                            var photoURL = getPhotoURLByReference(photoRef);
-                            var restName = result[i].name;
-                            var restRating = result[i].rating;
-                            var restAddress = result[i].vicinity;
-
-                            var newRestDiv = $("<div>").addClass("row restaurant")
-                            var restNameDiv = $("<h4>").text(restName);
-                            var restAddressDiv = $("<p>").text(restAddress);
-                            var restRatingDiv = $("<p>").text(restRating);
-                            var button = $("<button class='btn-primary'>").text("Save");
-                            var imgDiv = $(`<img src=${photoURL}>`)
-
-                            var photo_col = $("<div>").addClass("col-md-3")
-                            var info_col = $("<div>").addClass("col-md-3")
-                            var select_col = $("<div>").addClass("col-md-6")
-
-                            photo_col.append(imgDiv);
-                            info_col.append(restNameDiv, restAddressDiv, restRatingDiv);
-                            select_col.append(button);
-                            newRestDiv.append(photo_col, info_col, select_col)
-                            $(".diningOptions").append(newRestDiv);
-
-
-                        }
+                    $(".diningOptions").on("click", ".getMoreBtn2", function () {
+                        $.ajax({
+                            url: `${queryURL_food}&pagetoken=${page3token}`,
+                            method: "GET"
+                        }).done(function (response) {
+                            console.log(response)
+                            $(".getMoreBtn2").remove();
+                            addNewRestuarantRows(response);
+                        })
                     });
+                });
 
-
+            })
 
         });
-
-
     });
+
+
+});
