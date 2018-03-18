@@ -1,8 +1,7 @@
 $(function () {
     //replace chicago with other info
     var tripAddress = "chicago";
-    var geoApiKey = "AIzaSyBAJctlTRVB_3iL_Yk02nh_-t_fr6C22aA";
-    var googlePlaceApiKey = "AIzaSyAEXm4PX5429L96nGX_Pc_eX6BP7rO2G84";
+
     var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
     //comment out the return in the getPhotoURLByReference function to save api key usage when testing
     var getPhotoURLByReference = function (ref) {
