@@ -6,17 +6,19 @@
 <h3>{{ photo }}</h3>
 
 {{!-- display saved events --}}
-<div class="col-md-6 events">
-    {{this.events.name}}
-    {{this.events.address}}
-    {{this.events.rating}}
-    {{this.events.photo}}
-</div>
+<div class="row">
+    <div class="col-md-6 events">
+        {{this.events.name}}
+        {{this.events.address}}
+        {{this.events.rating}}
+        {{this.events.photo}}
+    </div>
 
-{{!-- display saved restaurant --}}
-<div class="col-md-6 restaurants">
-    {{this.restaurants.name}}
-    {{this.restaurants.address}}
-    {{this.restaurants.rating}}
-    {{this.restaurants.photo}}
+    {{!-- display saved restaurant --}}
+    <div class="col-md-6 restaurants">
+        {{this.restaurants.name}}
+        {{this.restaurants.address}}
+        {{this.restaurants.rating}}
+        {{this.restaurants.photo}}
+    </div>
 </div>
