@@ -8,18 +8,24 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
         crossorigin='anonymous'>
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="assets/css/tripForm.css">
 
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 mx-auto">
+        <h1 class="text-center center-block">Tell Us About Your Vacation Getaway</h1>
+        <div class="row tripLocation">
+            <div class="col-md-12">
+                <h4>Getaway Destination:</h4>
                 <div id="locationField">
-                    <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+                    <input id="autocomplete" placeholder="Enter Your Destination (not optional)" onFocus="geolocate()" type="text"></input>
                 </div>
-        
+
                 <table id="address">
                     <tr>
                         <td class="label">Street address</td>
@@ -59,9 +65,18 @@
                 </table>
             </div>
         </div>
+        <div class="row tripDates">
+            <div class="col-md-12">
+                <h4>When is your Trip? </h4>
+                <label for="from">From</label>
+                <input type="text" id="from" name="from">
+                <label for="to">to</label>
+                <input type="text" id="to" name="to">
+            </div>
+        </div>
     </div>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete"
         async defer></script>
     <script src="assets/js/tripForm.js"></script>
