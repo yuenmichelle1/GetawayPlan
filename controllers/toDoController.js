@@ -77,3 +77,5 @@ router.get("/api/:tripID", function (req, res) {
         res.render("index", resObj)
     })
 })
+
+module.exports = router;
