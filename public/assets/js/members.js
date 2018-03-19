@@ -5,10 +5,6 @@ $(document).ready(function() {
     $(".member-name").text(data.email);
   });
   $("#createTrip").on("click", function(){
-    // $.get("/trips/new").then(function(pageContent){
-    //   $("html").html(pageContent);
-    // })
     window.location.href = "/trips/new";
-    return false;
   })
 });
