@@ -1,26 +1,44 @@
-module.exports = function(sequelize, DataTypes) {
-  var Trip = sequelize.define("Trip", {
-    location: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    startdate: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    enddate: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  });
-  Trip.associate = function(models) {
-    // We're saying that a Trip should belong to an User
-    // A Trip can't be created without an User due to the foreign key constraint
-    Trip.belongsTo(models.User, {
-      foreignKey: {
+
+module.exports = function (sequelize, DataTypes){
+
+    var Trip = sequelize.define("Trip", {
+        name:{
+            type: DataTypes.STRING,
+            allowNull: false,
+
+        },
+        location:{
+            type: DataTypes.STRING,
+            allowNull: false,
+
+        },
+        startdate: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      enddate: {
+        type: DataTypes.STRING,
         allowNull: false
       }
-    });
-  };
-  return Trip;
-};
+//         background_photo:{
+//             type: DataTypes.STRING,
+//             allowNull: false,
+
+//         }
+    })
+
+    Trip.associate = function (models) {
+        Trip.hasMany(models.Restaurant)
+    };
+
+    Trip.associate = function (models) {
+        Trip.hasMany(models.Activity)
+    };
+
+    Trip.associate = function (models) {
+        Trip.belongsTo(models.User)
+    };
+
+    return Trip;
+}
+

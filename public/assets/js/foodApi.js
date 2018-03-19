@@ -56,11 +56,17 @@ $(function () {
     var saveRestaurant = function () {
         $(".diningOptions").on("click", ".saveRestaurant", function () {
             var info = {
-                restname: $(this).data("restname"),
-                restrating: $(this).data("restrating"),
-                restaddress: $(this).data("restaddress"),
-                photourl: $(this).data("photourl")       
+                name: $(this).data("restname"),
+                address: $(this).data("restaddress"),
+                rating: $(this).data("restrating"),
+                photo: $(this).data("photourl"),
+                // replace :tripID with tripID variable
+                tripID: 1      
             };
+      
+            $.post("/api/restaurant", info, function(){
+                location.reload();
+            })
 
         })
     }

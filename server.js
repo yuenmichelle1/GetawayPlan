@@ -26,6 +26,11 @@ app.use(passport.session());
 require("./routes/htmlroutes.js")(app);
 require("./routes/apiRoutes.js")(app);
 
+var toDoRoutes = require("./controllers/toDoController.js");
+var userRoutes = require("./controllers/userController.js");
+app.use(toDoRoutes);
+app.use(userRoutes);
+
 // Syncing our database ad logging a message to the user upon success
 db.sequelize.sync({ force: true }).then(function() {
     app.listen(PORT, function() {
