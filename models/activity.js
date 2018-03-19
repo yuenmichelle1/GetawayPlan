@@ -1,8 +1,6 @@
-
-
 module.exports = function (sequelize, DataTypes){
 
-    var Event = sequelize.define("Event", {
+    var Activity = sequelize.define("Activity", {
         name:{
             type: DataTypes.STRING,
             allowNull: false,
@@ -28,20 +26,13 @@ module.exports = function (sequelize, DataTypes){
                 isUrl: true
             }
 
-        },
-        url: {
-            type: DataTypes.STRING,
-            validate: {
-                isUrl: true
-            }
         }
     })
 
-    Event.associate = function (models) {
-        Event.belongsTo(models.Trip, {
+    Activity.associate = function (models) {
+        Activity.belongsTo(models.Trip, {
             onDelete: "cascade"
         })}
 
-    return Restaurant;
-
+    return Activity;
 }
