@@ -1,3 +1,5 @@
+
+
 $("#createNewTrip").on("click", function() {
     //
     var autocompleteLocation = $("#autocomplete").val();
