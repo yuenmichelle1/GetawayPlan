@@ -11,9 +11,12 @@ var db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
+// app.use(express.static("public/"));
+app.use(express.static(__dirname + '/public/'));
+app.use(express.static("."));
+
 // We need to use sessions to keep track of our user's login status
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -29,9 +32,8 @@ app.use(toDoRoutes);
 app.use(userRoutes);
 
 // Syncing our database ad logging a message to the user upon success
-db.sequelize.sync({force: true}).then(function() {
-  app.listen(PORT, function() {
-    console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
-  });
+db.sequelize.sync({ force: true }).then(function() {
+    app.listen(PORT, function() {
+        console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+    });
 });
-

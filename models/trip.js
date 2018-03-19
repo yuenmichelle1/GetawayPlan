@@ -1,3 +1,4 @@
+
 module.exports = function (sequelize, DataTypes){
 
     var Trip = sequelize.define("Trip", {
@@ -11,16 +12,19 @@ module.exports = function (sequelize, DataTypes){
             allowNull: false,
 
         },
-        dates:{
-            type: DataTypes.STRING,
-            allowNull: false,
+        startdate: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      enddate: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+//         background_photo:{
+//             type: DataTypes.STRING,
+//             allowNull: false,
 
-        },
-        background_photo:{
-            type: DataTypes.STRING,
-            allowNull: false,
-
-        }
+//         }
     })
 
     Trip.associate = function (models) {
@@ -37,3 +41,4 @@ module.exports = function (sequelize, DataTypes){
 
     return Trip;
 }
+
