@@ -54,7 +54,7 @@ module.exports = function(app) {
     }
   });
 
-  app.post("/api/createTrip", function(req, res){
+  app.post("/trips/api/createTrip", function(req, res){
     db.Trip.create({
       location: req.body.location.fullLocation,
       startdate: req.body.startdate,
