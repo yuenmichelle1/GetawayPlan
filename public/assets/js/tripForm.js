@@ -1,5 +1,58 @@
-var locationCity = $("#locality").val();
-var zipCode = $("#postal_code").val();
+$("#createNewTrip").on("click", function(){
+  // 
+  var autocompleteLocation = $("#autocomplete").val();
+  var locationCity = $("#locality").val();
+  var locationState = $("#administrative_area_level_1").val();
+  var locationCountry = $("#country").val()
+  var zipCode = $("#postal_code").val();
+  var startDate= $("#from").val();
+  var endDate = $("#to").val();
+  
+  console.log(locationCity);
+  console.log(locationState);
+  console.log(locationCountry);
+  console.log(zipCode);
+  console.log(startDate);
+  console.log(endDate);
+  console.log(autocompleteLocation);
+  checkDataFilled();
+
+  
+  function checkDataFilled(){
+    if (autocompleteLocation === "" || locationCity === ""){
+      // replace with modal later
+      alert("Enter Address");
+    } else if (endDate === "" || startDate=== ""){
+      // replace with modal later
+      alert("Enter Dates");
+    } else {
+      sendData();
+    }
+  }
+  function sendData(){
+    var location = {
+      fullLocation: autocompleteLocation,
+      city: locationCity,
+      state: locationState,
+      zipCode: zipCode
+    }
+    
+    var newTrip = {
+      location: location,
+      startdate: startDate,
+      enddate: endDate
+    }
+    $.ajax("api/createTrip",{
+      type: "POST", 
+      data: newTrip
+    }).then(function(){
+      console.log("new trip made");
+      location.reload();
+    })
+
+  }
+});
+
 
 var dateFormat = "mm/dd/yy",
   from = $("#from")
