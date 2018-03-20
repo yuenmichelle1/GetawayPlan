@@ -12,7 +12,7 @@ $(document).ready(function() {
     $(".tripLocation").text(`Trip Location: ${data.location}`);
     $(".dates").text(`${data.startdate} to ${data.enddate}`);
     var tripData = data;
-    displayWeather(tripData);
+    // displayWeather(tripData);
   });
   $("#createTrip").on("click", function() {
     window.location.href = `/${userId}/trips/new`;
