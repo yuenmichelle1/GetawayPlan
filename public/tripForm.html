@@ -17,11 +17,17 @@
 <body>
     <div class="container">
         <h1 class="text-center center-block">Tell Us About Your Vacation Getaway</h1>
+        <form>
+            <div class="form-group">
+              <label for="tripName">Name Your Trip (optional)</label>
+              <input type="text" class="form-control" id="tripName" aria-describedby="tripName" placeholder="Enter Name/Purpose of Your Trip">
+            </div>
+         </form>   
         <div class="row tripLocation">
             <div class="col-md-12">
                 <h4>Getaway Destination:</h4>
                 <div id="locationField">
-                    <input id="autocomplete" placeholder="Enter Your Destination (not optional)" onFocus="geolocate()" type="text"></input>
+                    <input id="autocomplete" placeholder="Enter Your Destination (Required)" onFocus="geolocate()" type="text"></input>
                 </div>
 
                 <table id="address">

@@ -3,6 +3,13 @@ var passport = require("../config/passport");
 var moment = require('moment');
 
 module.exports = function(app) {
+    app.get("/", function(req, res) {
+        // If the user already has an account send them to the members page
+        if (req.user) {
+          res.redirect("/members");
+        }
+        res.sendFile(path.join(__dirname, "../public/index.html"));
+      });
     // Using the passport.authenticate middleware with our local strategy.
     // If the user has valid login credentials, send them to the members page.
     // Otherwise the user will be sent an error
@@ -54,19 +61,19 @@ module.exports = function(app) {
         }
     });
 
-    app.post("/trips/api/createTrip", function(req, res) {
-        db.Trip.create({
-            location: req.body.location.fullLocation,
-            startdate: req.body.startdate,
-            enddate: req.body.enddate, 
-            UserId: 1
-        }).then(function(dbTrip) {
-            res.json(dbTrip);
-        }).catch(function(err) {
-            console.log(err);
-            res.json(err);
+    // app.post("/api/trip", function(req, res) {
+    //     db.Trip.create({
+    //         name: req.body.name,
+    //         location: req.body.location.fullLocation,
+    //         startdate: req.body.startdate,
+    //         enddate: req.body.enddate, 
+    //     }).then(function(dbTrip) {
+    //         res.json(dbTrip);
+    //     }).catch(function(err) {
+    //         console.log(err);
+    //         res.json(err);
             // res.status(422).json(err.errors[0].message);
-        });
-    })
+        // });
+    // })
 
 };

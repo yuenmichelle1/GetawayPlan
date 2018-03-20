@@ -9,6 +9,7 @@ $("#createNewTrip").on("click", function() {
     var zipCode = $("#postal_code").val();
     var startDate = $("#from").val();
     var endDate = $("#to").val();
+    var tripName = $("#tripName").val().trim();
 
     console.log(locationCity);
     console.log(locationState);
@@ -40,15 +41,17 @@ $("#createNewTrip").on("click", function() {
         };
 
         var newTrip = {
-            location: location,
+            name: tripName,
+            location: location.fullLocation,
             startdate: startDate,
             enddate: endDate
         };
-        $.ajax("/trips/api/createTrip", {
+        $.ajax("/api/trip", {
             type: "POST",
             data: newTrip
         }).then(function() {
             console.log("new trip made");
+            window.location.href = "/members";
         });
     }
 });
