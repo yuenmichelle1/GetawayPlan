@@ -2,6 +2,13 @@ const db = require("../models");
 const express = require("express");
 const router = express.Router();
 // route 
+// display User Trips (if any) Test on /members
+router.get("/api/trip_data", function(req,res){
+    db.Trip.findAll({}).then(function(trip){
+        // grab most recent trip
+        res.json(trip.reverse()[0]);
+    })
+});
 
 // use this route when save new restaurant. Tested:working
 router.post("/api/restaurant", function (req, res) {
@@ -27,6 +34,7 @@ router.post("/api/trip", function (req, res) {
         });
     })
 })
+
 
 // use this route when transition to trip dashboard. Tested:working
 // Send trip, activity. and restuarant information to index handlbars
