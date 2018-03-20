@@ -8,17 +8,25 @@
 {{!-- display saved events --}}
 <div class="row">
     <div class="col-md-6 events">
-        {{this.events.name}}
-        {{this.events.address}}
-        {{this.events.rating}}
-        {{this.events.photo}}
+        <ul>
+            {{#each activities}}
+                <p>activity name:  {{this.name}}</p>
+                <p>activity description: {{this.description}}</p>
+                <p>activity url:  {{this.url}}</p>
+                <p>activity photo:  {{this.photo}}</p>
+            {{/each}}
+        </ul>
     </div>
 
     {{!-- display saved restaurant --}}
     <div class="col-md-6 restaurants">
-        {{this.restaurants.name}}
-        {{this.restaurants.address}}
-        {{this.restaurants.rating}}
-        {{this.restaurants.photo}}
+        <ul>
+            {{#each restaurants}}
+                <p>restaurant name:  {{name}}</p>
+                <p>restaurant address:  {{address}}</p>
+                <p>restaurant rating:  {{rating}}</p>
+                <p>restaurant photo:  {{photo}}</p>
+            {{/each}}
+        </ul>
     </div>
 </div>

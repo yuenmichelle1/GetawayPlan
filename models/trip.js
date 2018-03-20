@@ -13,13 +13,13 @@ module.exports = function (sequelize, DataTypes){
 
         },
         startdate: {
-        type: DataTypes.STRING,
-        allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false
       },
-      enddate: {
-        type: DataTypes.STRING,
-        allowNull: false
-      }
+        enddate: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
 //         background_photo:{
 //             type: DataTypes.STRING,
 //             allowNull: false,
@@ -27,13 +27,15 @@ module.exports = function (sequelize, DataTypes){
 //         }
     })
 
-    Trip.associate = function (models) {
-        Trip.hasMany(models.Restaurant)
-    };
+    // Trip.associate = function (models) {
+    //     Trip.hasMany(models.Activity)
+    // };
 
     Trip.associate = function (models) {
-        Trip.hasMany(models.Activity)
+        Trip.hasMany(models.Restaurant);
+        Trip.hasMany(models.Activity);
     };
+
 
     // Trip.associate = function (models) {
     //     Trip.belongsTo(models.User)
