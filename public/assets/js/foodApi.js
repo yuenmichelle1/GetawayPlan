@@ -1,7 +1,8 @@
 $(function () {
     //replace chicago with other info
     var tripAddress = "chicago";
-
+    var geoApiKey;
+    var googlePlaceApiKey;
     var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
     //comment out the return in the getPhotoURLByReference function to save api key usage when testing
     var getPhotoURLByReference = function (ref) {
@@ -11,7 +12,7 @@ $(function () {
     var addNewRestuarantRows = function (response) {
         var result = response.results;
         //change how many result to show. 20 max for one call. 60 max total (3 calls)
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 1; i++) {
             var photoRef = result[i].photos[0].photo_reference;
             var photoURL = getPhotoURLByReference(photoRef);
             var restInfo = {
