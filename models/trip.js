@@ -35,9 +35,9 @@ module.exports = function (sequelize, DataTypes){
         Trip.hasMany(models.Activity)
     };
 
-    Trip.associate = function (models) {
-        Trip.belongsTo(models.User)
-    };
+    // Trip.associate = function (models) {
+    //     Trip.belongsTo(models.User)
+    // };
 
     return Trip;
 }

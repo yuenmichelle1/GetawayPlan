@@ -3,19 +3,7 @@ module.exports = function (sequelize, DataTypes){
     var Activity = sequelize.define("Activity", {
         name:{
             type: DataTypes.STRING,
-            allowNull: false,
-
-        },
-
-        address:{
-            type: DataTypes.STRING,
-            allowNull: false,
-
-        },
-
-        rating:{
-            type: DataTypes.FLOAT,
-
+            allowNull: false
         },
 
         photo:{
@@ -25,7 +13,21 @@ module.exports = function (sequelize, DataTypes){
             validate: {
                 isUrl: true
             }
+        },
 
+        url: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg",
+            validate: {
+                isUrl: true
+            }
+        },
+
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg"
         }
     })
 

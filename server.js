@@ -32,7 +32,8 @@ app.use(toDoRoutes);
 app.use(userRoutes);
 
 // Syncing our database ad logging a message to the user upon success
-db.sequelize.sync({ force: true }).then(function() {
+// { force: true }
+db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
         console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
     });
