@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes){
     var Trip = sequelize.define("Trip", {
         name:{
             type: DataTypes.STRING,
-            allowNull: false,
+            defaultValue: "Your Trip",
 
         },
         location:{
@@ -36,10 +36,11 @@ module.exports = function (sequelize, DataTypes){
         Trip.hasMany(models.Activity);
     };
 
-
-    // Trip.associate = function (models) {
-    //     Trip.belongsTo(models.User)
-    // };
+    Trip.associate = function (models) {
+        Trip.belongsTo(models.User, {
+            onDelete: "cascade"
+        })
+    };
 
     return Trip;
 }

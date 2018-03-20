@@ -1,6 +1,7 @@
 const db = require("../models");
 const express = require("express");
 const router = express.Router();
+// route 
 
 // use this route when save new restaurant. Tested:working
 router.post("/api/restaurant", function (req, res) {
@@ -23,7 +24,7 @@ router.post("/api/trip", function (req, res) {
     db.Trip.create(req.body).then(function(result){
         res.json({
             id: result.id
-        })
+        });
     })
 })
 
