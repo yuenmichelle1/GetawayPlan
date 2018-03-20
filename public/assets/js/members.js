@@ -1,4 +1,3 @@
-var moment = require("moment");
 $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
@@ -24,6 +23,8 @@ function displayWeather(tripData) {
   var apiWeatherKey = "bd17eb5ba2562be86fea1fd5d3d248f7";
   var latitude = getLatandLong(tripData).lat;
   var longitude= getLatandLong(tripData).long;
+  // Either be a UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone]. timezone should either be omitted (to refer to local time for the location being requested), Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
+  var time;
   var queryURL_Weather = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude},${time}`;
 
 
