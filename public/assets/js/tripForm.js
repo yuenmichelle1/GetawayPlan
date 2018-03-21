@@ -51,8 +51,6 @@ $("#createNewTrip").on("click", function() {
     }
     
 
-    
-
     function sendData(tripPhotoID) {
         var location = {
             fullLocation: autocompleteLocation,
