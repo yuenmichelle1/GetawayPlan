@@ -175,6 +175,7 @@ nav {
 .login-spacing {
     height: 150px;
 }
+
 #login-title {
     font-family: 'Playfair Display', serif;
     font-size: 2em;
@@ -183,18 +184,48 @@ nav {
     color:#616161;
     padding-top: 20px;
 }
+
 .img-otter {
     width: 80px;
     display:block;
     margin: 0 auto;
 }
+
 .text-left {
     font-family: 'Merriweather Sans', sans-serif;
 }
+
 .login-signup {
     width: 200px;
+    margin-top:-10px;
 }
 
+form.login {
+    margin-top: 20px;
+}
+
+/* Signup Page */
+.signup-spacing {
+    height: 100px;
+}
+
+form.signup {
+    margin-top: 20px;
+}
+
+.form-group label {
+    font-size: .8em;
+}
+
+.form-check-label {
+    margin-left: 10px;
+    font-size: .9em;
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    margin-left: 5px;
+}
 
 /* Bootstrap Media Queries */
 
