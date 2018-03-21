@@ -5,56 +5,95 @@
     <title>Passport Authentication</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
-    <!-- <link href="stylesheets/style.css" rel="stylesheet"> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Playfair+Display" rel="stylesheet">
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-            </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded position-fixed fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <img id="nav-img" src="/assets/img/sun-umbrella.svg" />GetAway</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a href="./index.html">
+                    <button class="btn btn-primary my-2 my-sm-0 nav-btn signup-btn" type="button" id="goToUserForm">Back To Home</button>
+                </a>
+                <a href="./login.html">
+                    <button class="btn btn-warning my-2 my-sm-0 nav-btn login-btn" type="button">Login</button>
+                </a>
+            </form>
         </div>
     </nav>
+
+    <!-- Form -->
     <div class="container">
+        <div class="signup-spacing"></div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h2>Sign Up Form</h2>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 text-center">
+                <img src="/assets/img/otter.svg" class="img-otter"/>
+                <h2 id="login-title">Sign Up To Plan Your Purrfect Getaway!</h2>
                 <form class="signup">
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label for="exampleInputEmail1">Email address</label>
                         <input type="email" class="form-control" id="email-input" placeholder="Email">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" class="form-control" id="password-input" placeholder="Password">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label for="PhoneNumber">Phone number</label>
                         <input type="number" class="form-control" id="phonenumber" placeholder="Phone Number (optional)">
                     </div>
-                    <div class="form-check">
+                    <div class="form-check text-left">
                         <input type="checkbox" class="form-check-input" value="1" class="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check here to get Text Notification</label>
+                        <label class="form-check-label" for="exampleCheck1">Get Text Notifications</label>
+                        <br>
                         <input type="checkbox" class="form-check-input" value="0" class="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">No text notification.</label>
+                        <label class="form-check-label" for="exampleCheck1">By clicking this you agree to our imaginary "<i>Terms and Conditions</i>"</label>
                     </div>
                     <div style="display: none" id="alert" class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
                         <span class="msg"></span>
                     </div>
-                    <button type="submit" class="btn btn-default">Sign Up</button>
                 </form>
-                <br />
-                <p>Or log in
-                    <a href="/login">her</a>
-                </p>
+             
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <a href="./dashboard.html">
+                    <button class="btn btn-primary my-2 my-sm-0 nav-btn signup-btn signup-signup" type="button" id="goToUserForm">Get Started ▸</button>
+                </a>
+
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="assets/js/signup.js"></script>
 
 </body>
