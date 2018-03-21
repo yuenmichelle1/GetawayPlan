@@ -23,17 +23,15 @@ module.exports = function (app) {
             where: {
                 UserId: userID
             },
+            order:[["createdAt", "DESC"], [db.Restaurant,"createdAt", "DESC"], [db.Activity, "createdAt", "DESC"]],
             include: [{
                     model: db.Restaurant,
-                    order: ["createdAt", "DESC"],
                 },
                 {
                     model: db.Activity,
-                    order: ["createdAt", "DESC"],
                 }
             ]
         }).then(function (trip) {
-            console.log(trip)
             var tripData = trip[0].dataValues
 
             var resObj = {
@@ -47,7 +45,6 @@ module.exports = function (app) {
                 activities: tripData.Activities
 
             };
-            console.log("handlbar object" + resObj)
             res.render("index", resObj)
 
         })
