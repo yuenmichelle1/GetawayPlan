@@ -29,6 +29,8 @@ module.exports = function(app) {
   });
 
   app.get("/:id/trips/new/", function(req,res){
+    // var userId = req.params.id;
+    // res.json({userid: userId});
     res.sendFile(path.join(__dirname, "../public/tripForm.html"));
   })
 
