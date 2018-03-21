@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
@@ -12,30 +13,58 @@ $(document).ready(function() {
     $(".tripLocation").text(`Trip Location: ${data.location}`);
     $(".dates").text(`${data.startdate} to ${data.enddate}`);
     var tripData = data;
-    // displayWeather(tripData);
+
+    var startdate = new Date(tripData.startdate);
+    var enddate = new Date(tripData.enddate);
+    var daysArr = getDates(startdate, enddate);
+    var bgPhoto= tripData.background_photo;
+    displayLocationPhoto(bgPhoto);
+    //get Lat and Long of trip  then display data //simplifyThis
+    //3 DAY FORECAST OF YOUR TRIP
+    getLatandLong(tripData, daysArr[0].getTime()/1000);
+    getLatandLong(tripData, daysArr[1].getTime()/1000);
+    getLatandLong(tripData, daysArr[2].getTime()/1000);
   });
   $("#createTrip").on("click", function() {
     window.location.href = `/${userId}/trips/new`;
   });
 });
 
-function displayWeather(tripData) {
+
+function displayLocationPhoto(photoRefID) {
+  var photoAPIKey= "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+  var photoURL =`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRefID}&key=${photoAPIKey}`;
+  var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
+  $("#locationPhoto").append(imgDiv);
+}
+
+
+function getLatandLong(tripData, time) {
+  var geoAPIKey = "AIzaSyCrxhIkepDpKvWOFxZo5ypgb1OBpf7hcsw";
+  var queryURL_geo = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${tripData}&key=${geoAPIKey}`;
+  $.ajax({
+    url: queryURL_geo,
+    method: "GET"
+  }).done(function(response) {
+    var geo = response.results[0].geometry.location;
+    var geoLocation = `${geo.lat},${geo.lng}`;
+    displayWeather(tripData, time, geoLocation);
+  });
+}
+function displayWeather(tripData, time, geolocation) {
   var apiWeatherKey = "bd17eb5ba2562be86fea1fd5d3d248f7";
-  var latitude = getLatandLong(tripData).lat;
-  var longitude= getLatandLong(tripData).long;
   // Either be a UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone]. timezone should either be omitted (to refer to local time for the location being requested), Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
-  var time;
-  var queryURL_Weather = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude},${time}`;
+  var queryURL_Weather = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiWeatherKey}/${geolocation},${time}`;
 
 
   $.ajax({
     url: queryURL_Weather,
     method: "GET"
   }).done(function(response) {
-    $("#time").html(`<h1>${timeConverter(response.currently.time)}</h1>`);
-    $("#weather").html(
-        `<div>Conditions: ${response.currently.summary}</div>
-        <div>Weather: ${response.currently.apparentTemperature}&deg F</div>`);
+    $(".time").html(`<h1>${timeConverter(response.currently.time)}</h1>`);
+    var newDiv = `<div>Conditions: ${response.currently.summary}</div>
+    <div>Weather: ${response.currently.apparentTemperature}&deg F</div>`;
+    $(".weather").append(newDiv);
     console.log(response);
   });
 }
