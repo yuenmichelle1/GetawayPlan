@@ -34,9 +34,6 @@ module.exports = function (sequelize, DataTypes){
     Trip.associate = function (models) {
         Trip.hasMany(models.Restaurant);
         Trip.hasMany(models.Activity);
-    };
-
-    Trip.associate = function (models) {
         Trip.belongsTo(models.User, {
             onDelete: "cascade"
         })

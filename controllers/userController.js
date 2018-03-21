@@ -10,7 +10,6 @@ router.post("/api/signup", function(req, res) {
   db.User.create(req.body).then(function(result) {
     // wrapper for orm.js that using MySQL insert callback will return a log to console,
     // render back to index with handle
-    console.log(result);
     res.redirect(307, "/api/login");
   });
   console.log(req.body);
