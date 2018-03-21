@@ -1,6 +1,8 @@
 var db = require("../models");
 var passport = require("../config/passport");
 var moment = require('moment');
+var isAuthenticated = require("../config/middleware/isAuthenticated");
+
 
 module.exports = function(app) {
     app.get("/", function(req, res) {
@@ -11,27 +13,56 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname, "../public/index.html"));
       });
     // Using the passport.authenticate middleware with our local strategy.
-    // If the user has valid login credentials, send them to the members page.
-    // Otherwise the user will be sent an error
+    // If the user has valid login credentials, send them to the dashboard page.
+    // Otherwise the user will stay in login
 
-    app.post("/api/login", passport.authenticate('local', {
-        successRedirect: '/api/trip/dashboard',
-        failureRedirect: "/login"}));
-        // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
-        // So we're sending the user back the route to the members page because the redirect will happen on the front end
-        // They won't get this or even be able to access this page if they aren't authed
-        // console.log("req.body.email is: " +req.body.email)
-        // db.User.findAll({
-        //     where: {
-        //         "email": req.body.email
-        //     }
-        // }).then(function(data){
-            // console.log("data++++" + data[0])
-            // res.json({userID: data[0].id})
-        // res.json(res);
- 
+    // app.post('/api/login', passport.authenticate('local'), function(req, res) {
+    //   res.redirect('/');
+    // });
 
+    // app.post('/api/login', passport.authenticate('local', { successRedirect: '/',failureRedirect: '/login' }));
+  
+    app.post('/api/login', passport.authenticate('local'), function(req, res) {
+        res.redirect(`/api/trip/dashboard`);
+      });
 
+    app.get('/api/trip/dashboard', isAuthenticated, function(req, res){
+        var userID = req.user.id;
+            console.log("userID:   " + userID)
+            db.Trip.findAll({
+                where: {
+                    UserId: userID
+                },
+                include: [{
+                        model: db.Restaurant,
+                        order: ["createdAt", "DESC"],
+                    },
+                    {
+                        model: db.Activity,
+                        order: ["createdAt", "DESC"],
+                    }
+                ]
+            }).then(function (trip) {
+                console.log(trip)
+                var tripData = trip[0].dataValues 
+    
+                var resObj = {
+                        id: tripData.id,
+                        name: tripData.name,
+                        location: tripData.location,
+                        startDate: tripData.startdate,
+                        endData: tripData.enddate,
+                        // photo: trip.background_photo,
+                        restaurants: tripData.Restaurants,
+                        activities: tripData.Activities
+    
+                };
+                console.log("handlbar object" + resObj)
+                res.render("index", resObj)
+        
+            })
+        })
+    
     // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
     // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
     // otherwise send back an error
@@ -72,20 +103,5 @@ module.exports = function(app) {
             });
         }
     });
-
-    // app.post("/api/trip", function(req, res) {
-    //     db.Trip.create({
-    //         name: req.body.name,
-    //         location: req.body.location.fullLocation,
-    //         startdate: req.body.startdate,
-    //         enddate: req.body.enddate, 
-    //     }).then(function(dbTrip) {
-    //         res.json(dbTrip);
-    //     }).catch(function(err) {
-    //         console.log(err);
-    //         res.json(err);
-            // res.status(422).json(err.errors[0].message);
-        // });
-    // })
 
 };
