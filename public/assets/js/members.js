@@ -69,15 +69,45 @@ function displayWeather(tripData, time, geolocation) {
   });
 }
 
-function getLatandLong(tripData) {
-  var googleaAPIKey = "AIzaSyCrxhIkepDpKvWOFxZo5ypgb1OBpf7hcsw";
-  var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripData}&key=${geoApiKey}`;
-  $.ajax({
-    url: queryURL_geo,
-    method: "GET"
-  }).done(function(response) {
-    var geo = response.results[0].geometry.location;
-    var geoLocation = `${geo.lat},${geo.lng}`;
-    return geoLocation;
-  });
+// Returns an array of dates between the two dates
+var getDates = function(startDate, endDate) {
+  var dates = [],
+      currentDate = startDate,
+      addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+  while (currentDate <= endDate) {
+    dates.push(currentDate);
+    currentDate = addDays.call(currentDate, 1);
+  }
+  return dates;
+};
+
+function timeConverter(UNIX_timestamp) {
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time =
+    month + " " + date + " " + year + " " + hour + ":" + min + ":" + sec;
+  return time;
 }
