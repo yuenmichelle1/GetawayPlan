@@ -61,4 +61,19 @@ module.exports = function(app) {
         }
     });
 
+    // app.post("/api/trip", function(req, res) {
+    //     db.Trip.create({
+    //         name: req.body.name,
+    //         location: req.body.location.fullLocation,
+    //         startdate: req.body.startdate,
+    //         enddate: req.body.enddate, 
+    //     }).then(function(dbTrip) {
+    //         res.json(dbTrip);
+    //     }).catch(function(err) {
+    //         console.log(err);
+    //         res.json(err);
+            // res.status(422).json(err.errors[0].message);
+        // });
+    // })
+
 };

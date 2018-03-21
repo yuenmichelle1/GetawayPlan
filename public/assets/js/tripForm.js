@@ -1,6 +1,4 @@
- $.get("/api/user_data").then(function(data){
-	return userId= data.id;	
-})
+
 
 $("#createNewTrip").on("click", function() {
     //
@@ -13,6 +11,13 @@ $("#createNewTrip").on("click", function() {
     var endDate = $("#to").val();
     var tripName = $("#tripName").val().trim();
 
+    console.log(locationCity);
+    console.log(locationState);
+    console.log(locationCountry);
+    console.log(zipCode);
+    console.log(startDate);
+    console.log(endDate);
+    console.log(autocompleteLocation);
     checkDataFilled();
 
     function checkDataFilled() {
@@ -39,16 +44,14 @@ $("#createNewTrip").on("click", function() {
             name: tripName,
             location: location.fullLocation,
             startdate: startDate,
-            enddate: endDate,
-            UserId: userId
+            enddate: endDate
         };
         $.ajax("/api/trip", {
             type: "POST",
             data: newTrip
-        }).then(function(data) {
+        }).then(function() {
             console.log("new trip made");
-            // window.location.href = `/api/trip/${data.id}`;
-            window.location.href=`/members`;
+            window.location.href = "/members";
         });
     }
 });
