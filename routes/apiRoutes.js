@@ -6,7 +6,7 @@ var path = require("path");
 
 
 module.exports = function (app) {
-
+    
     app.post("/api/login", passport.authenticate("local"), function(req, res) {
         res.json("/api/trip/dashboard");
       });
@@ -41,7 +41,7 @@ module.exports = function (app) {
                 };
                 res.render("index", resObj)
             } else {
-                res.sendFile(path.join(__dirname, "../public/staticDashboard.html"));
+                res.sendFile(path.join(__dirname, "../public/members.html"));
             }
         })
         
