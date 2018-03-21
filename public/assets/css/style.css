@@ -171,3 +171,171 @@ nav {
     margin-top: 20px;
 }
 
+/* Login Page */
+.login-spacing {
+    height: 150px;
+}
+
+#login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    font-weight: 600;
+    display: inline;
+    color:#616161;
+    padding-top: 20px;
+}
+
+.img-otter {
+    width: 80px;
+    display:block;
+    margin: 0 auto;
+}
+
+.text-left {
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.login-signup {
+    width: 200px;
+    margin-top:-10px;
+}
+
+form.login {
+    margin-top: 20px;
+}
+
+/* Signup Page */
+.signup-spacing {
+    height: 100px;
+}
+
+form.signup {
+    margin-top: 20px;
+}
+
+.form-group label {
+    font-size: .8em;
+}
+
+.form-check-label {
+    margin-left: 10px;
+    font-size: .9em;
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    margin-left: 5px;
+}
+
+/* Bootstrap Media Queries */
+
+@media all and (max-width: 991px) {
+    .content-text-right {
+        padding-left: 100px;
+    }
+} 
+@media all and (max-width: 768px) {
+    .hero-line {
+        font-size: 4em;
+    }
+    .hero-subtext {
+        font-size: 1.3em;
+        top: 380px;
+    }
+    .hero-btn {
+        top: 430px;
+    }
+    .content-subtitle {
+        font-size: 2.5em;
+    }
+    .content-text {
+        font-size: 1.3em;
+    }
+    .content-text-right {
+        padding-left: 80px;
+    }
+    .cta-text {
+        font-size: 2em;
+    }
+    .content-bgIcon-right {
+        right: 10px;
+    }
+    .tent-icon {
+        right: -70px;
+    }
+    .trekking-icon {
+        left: -200px;
+    }
+    .forkknife-icon {
+        right: -80px;
+    }
+    .spacing2 {
+        height: 350px;
+    }
+} 
+@media all and (max-width: 575px) {
+    .navbar-brand {
+        margin-left: -70px;
+    }
+    .navbar-toggler {
+        margin-top: 5px;
+    }
+    .nav-btn {
+        position: absolute;
+        right: 10px;
+        top: 60px;
+    }
+    .login-btn {
+        top: 110px;
+    }
+    .hero-line {
+        font-size: 3.6em;
+        left: 30px;
+    }
+    .hero-subtext {
+        font-size: 1.6em;
+        top: 380px;
+        left: 30px;
+        line-height: 1.5;
+    }
+    .hero-btn {
+        top: 460px;
+        left: 30px;
+    }
+    .content-subtitle {
+        margin-left: 50px;
+    }
+    .content-text-trips {
+        margin-left: 60px;
+    }
+    .img-trips {
+        margin-left: 100px;
+    }
+    .tent-icon {
+        right: 170px;
+        top: -90px;
+    }
+    .img-right {
+        margin-left: 140px;
+    }
+    .spacing {
+        height: 200px;
+    }
+    .spacing2 {
+        height: 250px;
+    }
+    .content-bgIcon-right {
+        right: 10px;
+        top: -500px;
+    }
+    .content-text-dining {
+        margin-left: 60px;
+    }
+    .img-food {
+        margin-left: 140px;
+    }
+    .forkknife-icon {
+        right: 270px;
+        top: -120px;
+    }
+}

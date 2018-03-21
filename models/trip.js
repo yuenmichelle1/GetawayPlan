@@ -20,11 +20,10 @@ module.exports = function (sequelize, DataTypes){
             type: DataTypes.STRING,
             allowNull: false
         }
-//         background_photo:{
-//             type: DataTypes.STRING,
-//             allowNull: false,
+        background_photo:{
+            type: DataTypes.STRING
 
-//         }
+        }
     })
 
     // Trip.associate = function (models) {
