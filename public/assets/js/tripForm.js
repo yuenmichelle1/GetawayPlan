@@ -12,6 +12,7 @@ $("#createNewTrip").on("click", function() {
     var startDate = $("#from").val();
     var endDate = $("#to").val();
     var tripName = $("#tripName").val().trim();
+    var tripPhotoRefId;
 
     checkDataFilled();
 
@@ -23,11 +24,36 @@ $("#createNewTrip").on("click", function() {
             // replace with modal later
             alert("Enter Dates");
         } else {
-            sendData();
+            // sendData();
+            grabBGImg();
         }
     }
+    function grabBGImg(){
+        // grab geolocation
+        var geoApiKey= "AIzaSyCrxhIkepDpKvWOFxZo5ypgb1OBpf7hcsw";
+        var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${autocompleteLocation}&key=${geoApiKey}`;
+        $.ajax({
+            url: queryURL_geo,
+            method: "GET"
+        }).done(function (response) {
+            var googlePlaceApiKey= "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+            var geo = response.results[0].geometry.location;
+            var geoLocation = `${geo.lat},${geo.lng}`
+            var queryURL_pictures = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${geoLocation}&radius=500&rankby=prominence&key=${googlePlaceApiKey}`;
+            $.ajax({
+                url: queryURL_pictures,
+                method: "GET"
+            }).done(function(response){
+               tripPhotoRefId = response.results[0].photos[0].photo_reference;
+               sendData(tripPhotoRefId);
+            })
+        })
+    }
+    
 
-    function sendData() {
+    
+
+    function sendData(tripPhotoID) {
         var location = {
             fullLocation: autocompleteLocation,
             city: locationCity,
@@ -40,7 +66,8 @@ $("#createNewTrip").on("click", function() {
             location: location.fullLocation,
             startdate: startDate,
             enddate: endDate,
-            UserId: userId
+            UserId: userId,
+            background_photo: tripPhotoID
         };
         $.ajax("/api/trip", {
             type: "POST",
