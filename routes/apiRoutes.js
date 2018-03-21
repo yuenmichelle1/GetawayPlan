@@ -2,6 +2,7 @@ var db = require("../models");
 var passport = require("../config/passport");
 var moment = require('moment');
 var isAuthenticated = require("../config/middleware/isAuthenticated");
+var path = require("path");
 
 
 module.exports = function (app) {
@@ -26,22 +27,24 @@ module.exports = function (app) {
                 }
             ]
         }).then(function (trip) {
-            var tripData = trip[0].dataValues
-
-            var resObj = {
-                id: tripData.id,
-                name: tripData.name,
-                location: tripData.location,
-                startDate: tripData.startdate,
-                endData: tripData.enddate,
-                // photo: trip.background_photo,
-                restaurants: tripData.Restaurants,
-                activities: tripData.Activities
-
-            };
-            res.render("index", resObj)
-
+            if (trip[0]){
+                var tripData = trip[0].dataValues
+                var resObj = {
+                    id: tripData.id,
+                    name: tripData.name,
+                    location: tripData.location,
+                    startDate: tripData.startdate,
+                    endData: tripData.enddate,
+                    // photo: trip.background_photo,
+                    restaurants: tripData.Restaurants,
+                    activities: tripData.Activities
+                };
+                res.render("index", resObj)
+            } else {
+                res.sendFile(path.join(__dirname, "../public/staticDashboard.html"));
+            }
         })
+        
     })
 
     app.post("/api/signup", function (req, res) {
