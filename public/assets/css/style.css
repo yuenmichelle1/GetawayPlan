@@ -171,6 +171,31 @@ nav {
     margin-top: 20px;
 }
 
+/* Login Page */
+.login-spacing {
+    height: 150px;
+}
+#login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    font-weight: 600;
+    display: inline;
+    color:#616161;
+    padding-top: 20px;
+}
+.img-otter {
+    width: 80px;
+    display:block;
+    margin: 0 auto;
+}
+.text-left {
+    font-family: 'Merriweather Sans', sans-serif;
+}
+.login-signup {
+    width: 200px;
+}
+
+
 /* Bootstrap Media Queries */
 
 @media all and (max-width: 991px) {
