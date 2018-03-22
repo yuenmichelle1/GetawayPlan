@@ -53,7 +53,7 @@ module.exports = function (app) {
             phoneNumber: req.body.phoneNumber,
             wantsTextNotification: req.body.wantsTextNotification
         }).then(function () {
-            res.json("/members");
+            res.json("success");
         }).catch(function (err) {
             res.json(err);
         });
