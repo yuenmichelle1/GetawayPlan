@@ -43,7 +43,7 @@ function displayLocationPhoto(photoRefID) {
     var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
-    $(".trip-bg").html(imgDiv);
+    $('.trip-bg').css('background-image', `url("${photoURL}")`)
 }
 
 function getLatandLong(tripData, time, icon) {
