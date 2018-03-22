@@ -246,6 +246,27 @@ form.signup {
     align-items: flex-start;
 }
 
+/* Trip Form */
+.dashboard-btn {
+    width: 150px;
+}
+
+.tripform-spacing {
+    height: 100px;
+}
+
+.tripform-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    font-weight: 600;
+    display: inline;
+    color:#616161;
+}
+
+.menu-links {
+    cursor: pointer;
+}
+
 /* Bootstrap Media Queries */
 @media all and (max-width: 991px) {
     .content-text-right {
