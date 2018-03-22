@@ -2,52 +2,78 @@
 <html lang="en">
 
 <head>
-    <title>Passport Authentication</title>
+    <title>GetAway - New Member First Time!</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
-    <!-- <link href="stylesheets/style.css" rel="stylesheet"> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Playfair+Display" rel="stylesheet">
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/tripForm.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/logout">
-                    Logout
+    <!-- Navbar -->
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded position-fixed fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="./index.html">
+            <img id="nav-img" src="/assets/img/sun-umbrella.svg" />GetAway</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <span class="member-name"></span>
+                <a href="./index.html">
+                    <button class="btn btn-warning my-2 my-sm-0 nav-btn login-btn" type="button">Logout</button>
                 </a>
-            </div>
+            </form>
         </div>
     </nav>
+
+    <!-- Content -->
     <div class="container">
+        <div class="spacing"></div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h2>Welcome
-                    <span class="member-name"></span>
-                </h2>
-                <div id="locationPhoto">
-                    <div> Your most recent trip:
-                        <h2 class="tripName">No trips yet! (create one!)</h2>
-                        <h3 class="tripLocation"></h3>
-                        <h4 class="dates"></h4>
-                        <canvas id="icon1" width="128" height="128"></canvas>
-                        <canvas id="icon2" width="128" height="128"></canvas>
-                        <canvas id="icon3" width="128" height="128"></canvas>
-                    </div>
-                </div>
-                <div>Weather for your most latest trip:
-                    <h2 class="weather">
-                        <span class="time"></span>
-                    </h2>
-                </div>
-                <button class="center-block" id="createTrip">Create A Trip</button>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <a href="./tripForm.html">
+                    <img class="member-first-btn imgh" src="/assets/img/NewTrip-Btn.png"/>
+                </a>
             </div>
-        </div>
     </div>
-    <script src="assets/js/skycons.js"></script>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="/assets/js/tripForm.js"></script>
+
     <script type="text/javascript" src="assets/js/members.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.imgh').mouseover(function () {
+                $(this).attr("src", "/assets/img/NewTrip-Btn-Hover.png");
+            }).mouseout(function () {
+                $(this).attr("src", "/assets/img/NewTrip-Btn.png");
+            });
+        });
+    </script>
 </body>
 
 </html>

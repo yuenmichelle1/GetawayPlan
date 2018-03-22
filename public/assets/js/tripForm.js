@@ -71,7 +71,7 @@ $("#createNewTrip").on("click", function() {
       data: newTrip
     }).then(function() {
       console.log("new trip made");
-      window.location.href = "/members";
+      // window.location.href = "/members";
     });
   }
 });

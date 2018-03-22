@@ -1,35 +1,49 @@
-// Requiring path to so we can use relative routes to our HTML files
-var path = require("path");
 
-// Requiring our custom middleware for checking if a user is logged in
+var path = require("path");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
 
-  app.get("/signup", function(req, res) {
-    // If the user already has an account send them to the members page
+  app.get("/home", function (req, res) {
     if (req.user) {
-      res.redirect("/members");
+        res.redirect("/api/trip/dashboard");
+    }
+    console.log("logged out")
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+// need to ask michelle about the id  -----------------------------------------------------------------
+  app.get("/:id/trips/new/", function(req,res){
+    res.sendFile(path.join(__dirname, "../public/tripForm.html"));
+  })
+// -----------------------------------------------------------------
+// add route direct to food api
+  app.get("/restaurants/new/", function(req,res){
+    res.sendFile(path.join(__dirname, "../public/foodApi.html"));
+  })
+
+
+  app.get("/signup", function(req, res) {
+    if (req.user) {
+      res.redirect("/api/trip/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
+  app.get("/members", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/members.html"));
+  });
+
   app.get("/login", function(req, res) {
-    // If the user already has an account send them to the members page
     if (req.user) {
-      res.redirect("/members");
+      res.redirect("/api/trip/dashboard");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/members.html"));
+  app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
   });
-
-  app.get("/:id/trips/new/", function(req,res){
-    res.sendFile(path.join(__dirname, "../public/tripForm.html"));
-  })
 
 };
