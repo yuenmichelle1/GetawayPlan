@@ -21,9 +21,9 @@ $(document).ready(function() {
     displayLocationPhoto(bgPhoto);
     //get Lat and Long of trip  then display data //simplifyThis
     //3 DAY FORECAST OF YOUR TRIP
-    getLatandLong(tripData, daysArr[0].getTime()/1000);
-    getLatandLong(tripData, daysArr[1].getTime()/1000);
-    getLatandLong(tripData, daysArr[2].getTime()/1000);
+    getLatandLong(tripData, daysArr[0].getTime()/1000, "icon1");
+    getLatandLong(tripData, daysArr[1].getTime()/1000, "icon2");
+    getLatandLong(tripData, daysArr[2].getTime()/1000, "icon3");
   });
   $("#createTrip").on("click", function() {
     window.location.href = `/${userId}/trips/new`;
@@ -41,9 +41,9 @@ $(document).ready(function() {
 
 function displayLocationPhoto(photoRefID) {
     var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
-    var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRefID}&key=${photoAPIKey}`;
+    var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
-    $("#locationPhoto").append(imgDiv);
+    $(".trip-bg").html(imgDiv);
 }
 
 function getLatandLong(tripData, time, icon) {
