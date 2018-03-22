@@ -60,8 +60,9 @@ $(document).ready(function() {
       .catch(handleLoginErr);
     }
 // somehow the error not caught
-  function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
-    $("#alert").fadeIn(500);
-  }
+function handleLoginErr(err) {
+  $("#alert .msg").text(err.responseJSON);
+  $("#alert").fadeIn(500);
+}
+
 });
