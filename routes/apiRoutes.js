@@ -54,11 +54,15 @@ module.exports = function (app) {
             phoneNumber: req.body.phoneNumber,
             wantsTextNotification: req.body.wantsTextNotification
         }).then(function () {
-            res.redirect(307, "/api/login");
+            res.json("/members");
         }).catch(function (err) {
             res.json(err);
         });
     });
+
+    app.get("/members", function(req, res) {
+        res.sendFile(path.join(__dirname, "../public/members.html"));
+    })
 
     app.post("/api/restaurant", function (req, res) {
         db.Restaurant.create(req.body).then(function (result) {

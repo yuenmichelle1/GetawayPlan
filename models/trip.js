@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes){
         enddate: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
         background_photo:{
             type: DataTypes.STRING
 
