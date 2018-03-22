@@ -1,88 +1,94 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Place Autocomplete Address Form</title>
+    <title>GetAway - Add Your Trip!</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/assets/css/tripForm.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Playfair+Display" rel="stylesheet">
 
+    <!-- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- <link rel="stylesheet" href="/assets/css/tripForm.css"> -->
 </head>
-
 <body>
+    <!-- Nav -->
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded position-fixed fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <img id="nav-img" src="/assets/img/sun-umbrella.svg" />GetAway</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a href="/api/trip/dashboard">
+                    <button class="btn btn-primary my-2 my-sm-0 nav-btn dashboard-btn" type="button" id="goToUserForm">Dashboard</button>
+                </a>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Form -->
     <div class="container">
-        <h1 class="text-center center-block">Tell Us About Your Vacation Getaway</h1>
-        <form>
-            <div class="form-group">
-              <label for="tripName">Name Your Trip (optional)</label>
-              <input type="text" class="form-control" id="tripName" aria-describedby="tripName" placeholder="Enter Name/Purpose of Your Trip">
+        <div class="tripform-spacing"></div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 text-center">
+                <img src="/assets/img/otter.svg" class="img-otter" />
+                <h2 class="text-center tripform-title">Tell Us About Your Vacation Getaway</h1>
+                <form class="signup">
+                    <div class="form-group text-left">
+                        <label for="tripName">Name Your Trip (Optional)</label>
+                        <input type="text" class="form-control" id="tripName" placeholder="Enter Trip Name...">
+                    </div>
+                    <div class="form-group text-left">
+                        <label for="tripLocation">GetAway Destination
+                            <span style="color:#D5842E">(Required)</style>
+                        </label>
+                        <input type="text" class="form-control" onFocus="geolocate()" id="autocomplete" placeholder="Enter Your Destination...">
+                    </div>
+                    <div class="form-group text-left">
+                        <label for="from">Arriving at GetAway
+                            <span style="color:#D5842E">(Required)</style>
+                        </label>
+                        <input type="text" class="form-control" id="from" name="from" placeholder="Date MM/DD/YY">
+                    </div>
+                    <div class="form-group text-left">
+                        <label for="to">Leaving GetAway
+                            <span style="color:#D5842E">(Required)</style>
+                        </label>
+                        <input type="text" class="form-control" id="to" name="to" placeholder="Date MM/DD/YY">
+                    </div>
+                    <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <span class="msg"></span>
+                    </div>
+                </form>
             </div>
-         </form>   
-        <div class="row tripLocation">
-            <div class="col-md-12">
-                <h4>Getaway Destination:</h4>
-                <div id="locationField">
-                    <input id="autocomplete" placeholder="Enter Your Destination (Required)" onFocus="geolocate()" type="text"></input>
-                </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+        </div>
 
-                <table id="address">
-                    <tr>
-                        <td class="label">Street address</td>
-                        <td class="slimField">
-                            <input class="field" id="street_number" disabled="true"></input>
-                        </td>
-                        <td class="wideField" colspan="2">
-                            <input class="field" id="route" disabled="true"></input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">City</td>
-                        <!-- Note: Selection of address components in this example is typical.
-                         You may need to adjust it for the locations relevant to your app. See
-                         https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
-                    -->
-                        <td class="wideField" colspan="3">
-                            <input class="field" id="locality" disabled="true"></input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">State</td>
-                        <td class="slimField">
-                            <input class="field" id="administrative_area_level_1" disabled="true"></input>
-                        </td>
-                        <td class="label">Zip code</td>
-                        <td class="wideField">
-                            <input class="field" id="postal_code" disabled="true"></input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">Country</td>
-                        <td class="wideField" colspan="3">
-                            <input class="field" id="country" disabled="true"></input>
-                        </td>
-                    </tr>
-                </table>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <button class="btn btn-primary my-2 my-sm-0 nav-btn signup-btn signup-signup menu-links" type="button" id="createNewTrip">Add Trip</button>
             </div>
         </div>
-        <div class="row tripDates">
-            <div class="col-md-12">
-                <h4>When is your Trip? </h4>
-                <label for="from">From</label>
-                <input type="text" id="from" name="from">
-                <label for="to">to</label>
-                <input type="text" id="to" name="to">
-            </div>
-        </div>
-        <button id="createNewTrip" class "center-block"> Create Your Trip!</button>
     </div>
-
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete"
+        async defer></script>
     <script src="/assets/js/tripForm.js"></script>
 
 </body>
