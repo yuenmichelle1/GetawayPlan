@@ -227,8 +227,26 @@ form.signup {
     margin-left: 5px;
 }
 
-/* Bootstrap Media Queries */
+/* First Time Members */
+.member-name {
+    color: #616161;
+}
 
+.member-first-btn {
+    width: 500px;
+    height: 500px;
+    margin-top: -100px;
+}
+
+.modal.show  {
+    display:flex!important;
+    flex-direction:column;
+    justify-content:center;
+    align-content:center;
+    align-items: flex-start;
+}
+
+/* Bootstrap Media Queries */
 @media all and (max-width: 991px) {
     .content-text-right {
         padding-left: 100px;
