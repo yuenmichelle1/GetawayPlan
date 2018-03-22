@@ -197,7 +197,6 @@ nav {
 
 .login-signup {
     width: 200px;
-    margin-top:-10px;
 }
 
 form.login {
@@ -385,5 +384,11 @@ form.signup {
     .forkknife-icon {
         right: 270px;
         top: -120px;
+    }
+    .form-login-btn {
+        top: 290px;
+    }
+    .signup-signup {
+        top: 0px;
     }
 }
