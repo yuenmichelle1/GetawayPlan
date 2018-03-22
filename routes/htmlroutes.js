@@ -16,7 +16,6 @@ module.exports = function(app) {
   app.get("/:id/trips/new/", function(req,res){
     res.sendFile(path.join(__dirname, "../public/tripForm.html"));
   })
-
 // -----------------------------------------------------------------
 // add route direct to food api
   app.get("/restaurants/new/", function(req,res){
