@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>GetAway - Add Your Trip!</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -10,8 +11,6 @@
 
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Playfair+Display" rel="stylesheet">
 
@@ -19,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <!-- <link rel="stylesheet" href="/assets/css/tripForm.css"> -->
 </head>
+
 <body>
     <!-- Nav -->
     <nav class="navbar navbar-toggleable-sm navbar-light bg-faded position-fixed fixed-top">
@@ -48,35 +48,35 @@
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 text-center">
                 <img src="/assets/img/otter.svg" class="img-otter" />
                 <h2 class="text-center tripform-title">Tell Us About Your Vacation Getaway</h1>
-                <form class="signup">
-                    <div class="form-group text-left">
-                        <label for="tripName">Name Your Trip (Optional)</label>
-                        <input type="text" class="form-control" id="tripName" placeholder="Enter Trip Name...">
-                    </div>
-                    <div class="form-group text-left">
-                        <label for="tripLocation">GetAway Destination
-                            <span style="color:#D5842E">(Required)</style>
-                        </label>
-                        <input type="text" class="form-control" onFocus="geolocate()" id="autocomplete" placeholder="Enter Your Destination...">
-                    </div>
-                    <div class="form-group text-left">
-                        <label for="from">Arriving at GetAway
-                            <span style="color:#D5842E">(Required)</style>
-                        </label>
-                        <input type="text" class="form-control" id="from" name="from" placeholder="Date MM/DD/YY">
-                    </div>
-                    <div class="form-group text-left">
-                        <label for="to">Leaving GetAway
-                            <span style="color:#D5842E">(Required)</style>
-                        </label>
-                        <input type="text" class="form-control" id="to" name="to" placeholder="Date MM/DD/YY">
-                    </div>
-                    <div style="display: none" id="alert" class="alert alert-danger" role="alert">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
-                        <span class="msg"></span>
-                    </div>
-                </form>
+                    <form class="signup">
+                        <div class="form-group text-left">
+                            <label for="tripName">Name Your Trip (Optional)</label>
+                            <input type="text" class="form-control" id="tripName" placeholder="Enter Trip Name...">
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="tripLocation">GetAway Destination
+                                <span style="color:#D5842E">(Required)</style>
+                            </label>
+                            <input type="text" class="form-control" onFocus="geolocate()" id="autocomplete" placeholder="Enter Your Destination...">
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="from">Arriving at GetAway
+                                <span style="color:#D5842E">(Required)</style>
+                            </label>
+                            <input type="text" class="form-control" id="from" name="from" placeholder="Date MM/DD/YY">
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="to">Leaving GetAway
+                                <span style="color:#D5842E">(Required)</style>
+                            </label>
+                            <input type="text" class="form-control" id="to" name="to" placeholder="Date MM/DD/YY">
+                        </div>
+                        <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <span class="msg"></span>
+                        </div>
+                    </form>
             </div>
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
@@ -91,7 +91,10 @@
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete" async defer></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE8vaVKgn_9F6dR99fQVEP_KSYpZFiuks&libraries=places&callback=initAutocomplete"
+        async defer></script>
 
     <script src="/assets/js/tripForm.js"></script>
 
