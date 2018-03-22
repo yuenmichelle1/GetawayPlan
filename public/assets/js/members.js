@@ -1,3 +1,4 @@
+var skycons = new Skycons();
 $(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
@@ -58,38 +59,57 @@ function displayWeather(tripData, time, geolocation) {
     method: "GET"
   }).done(function(response) {
     var weatherIcon = response.currently.icon;
-    var weatherAndtimeDiv = `<div class="container"> ${timeConverter(
-      response.currently.time
-    )}
+    var weatherAndtimeDiv = 
+    `<div class="container"> 
+      ${timeConverter(response.currently.time)}
         <div class="row">Weather: ${
           response.currently.apparentTemperature
         }&deg F</div>
         <div class="row">Conditions: ${response.currently.summary}</div>
-        <canvas id="${weatherIcon} width="64" height="64"></canvas>
+        ${setSkycon(weatherIcon)}
     </div>`;
 
-    var icons = new Skycons(),
-      list = [
-        "clear-day",
-        "clear-night",
-        "partly-cloudy-day",
-        "partly-cloudy-night",
-        "cloudy",
-        "rain",
-        "sleet",
-        "snow",
-        "wind",
-        "fog"
-      ],
-      i;
-
-    for (i = list.length; i--; ) icons.set(list[i], list[i]);
-
-    icons.play();
+    function setSkycon(weatherType) {
+      var skycon = null;
+      switch (weatherType) {
+        case "clear-day":
+          skycon = Skycons.CLEAR_DAY;
+          break;
+        case "clear-night":
+          skycon = Skycons.CLEAR_NIGHT;
+          break;
+        case "rain":
+          skycon = Skycons.RAIN;
+          break;
+        case "snow":
+          skycon = Skycons.SNOW;
+          break;
+        case "sleet":
+          skycon = Skycons.SLEET;
+          break;
+        case "wind":
+          skycon = Skycons.WIND;
+          break;
+        case "fog":
+          skycon = Skycons.FOG;
+          break;
+        case "cloudy":
+          skycon = Skycons.CLOUDY;
+          break;
+        case "partly-cloudy-day":
+          skycon = Skycons.PARTLY_CLOUDY_DAY;
+          break;
+        case "partly-cloudy-night":
+          skycon = Skycons.PARTLY_CLOUDY_NIGHT;
+          break;
+      }
+      if (skycon !== null) {
+        skycons.set("skycon", skycon);
+        skycons.play();
+      }
+    }
     $(".time").append(weatherAndtimeDiv);
-    console.log(response);
   });
-}
 
 // Returns an array of dates between the two dates
 var getDates = function(startDate, endDate) {
@@ -142,22 +162,20 @@ function timeConverter(UNIX_timestamp) {
   var requestInterval, cancelInterval;
 
   (function() {
-    var raf =
-        global.requestAnimationFrame ||
-        global.webkitRequestAnimationFrame ||
-        global.mozRequestAnimationFrame ||
-        global.oRequestAnimationFrame ||
-        global.msRequestAnimationFrame,
-      caf =
-        global.cancelAnimationFrame ||
-        global.webkitCancelAnimationFrame ||
-        global.mozCancelAnimationFrame ||
-        global.oCancelAnimationFrame ||
-        global.msCancelAnimationFrame;
+    var raf = global.requestAnimationFrame       ||
+              global.webkitRequestAnimationFrame ||
+              global.mozRequestAnimationFrame    ||
+              global.oRequestAnimationFrame      ||
+              global.msRequestAnimationFrame     ,
+        caf = global.cancelAnimationFrame        ||
+              global.webkitCancelAnimationFrame  ||
+              global.mozCancelAnimationFrame     ||
+              global.oCancelAnimationFrame       ||
+              global.msCancelAnimationFrame      ;
 
-    if (raf && caf) {
-      requestInterval = function(fn) {
-        var handle = { value: null };
+    if(raf && caf) {
+      requestInterval = function(fn, delay) {
+        var handle = {value: null};
 
         function loop() {
           handle.value = raf(loop);
@@ -171,18 +189,22 @@ function timeConverter(UNIX_timestamp) {
       cancelInterval = function(handle) {
         caf(handle.value);
       };
-    } else {
+    }
+
+    else {
       requestInterval = setInterval;
       cancelInterval = clearInterval;
     }
-  })();
+  }());
 
-  // WEATHER ICONS
+
   /* Define skycon things. */
+  /* FIXME: I'm *really really* sorry that this code is so gross. Really, I am.
+   * I'll try to clean it up eventually! Promise! */
   var KEYFRAME = 500,
-    STROKE = 0.08,
-    TAU = 2.0 * Math.PI,
-    TWO_OVER_SQRT_2 = 2.0 / Math.sqrt(2);
+      STROKE = 0.08,
+      TAU = 2.0 * Math.PI,
+      TWO_OVER_SQRT_2 = 2.0 / Math.sqrt(2);
 
   function circle(ctx, x, y, r) {
     ctx.beginPath();
@@ -199,7 +221,7 @@ function timeConverter(UNIX_timestamp) {
 
   function puff(ctx, t, cx, cy, rx, ry, rmin, rmax) {
     var c = Math.cos(t * TAU),
-      s = Math.sin(t * TAU);
+        s = Math.sin(t * TAU);
 
     rmax -= rmin;
 
@@ -214,35 +236,33 @@ function timeConverter(UNIX_timestamp) {
   function puffs(ctx, t, cx, cy, rx, ry, rmin, rmax) {
     var i;
 
-    for (i = 5; i--; ) puff(ctx, t + i / 5, cx, cy, rx, ry, rmin, rmax);
+    for(i = 5; i--; )
+      puff(ctx, t + i / 5, cx, cy, rx, ry, rmin, rmax);
   }
 
   function cloud(ctx, t, cx, cy, cw, s, color) {
     t /= 30000;
 
     var a = cw * 0.21,
-      b = cw * 0.12,
-      c = cw * 0.24,
-      d = cw * 0.28;
+        b = cw * 0.12,
+        c = cw * 0.24,
+        d = cw * 0.28;
 
     ctx.fillStyle = color;
     puffs(ctx, t, cx, cy, a, b, c, d);
 
-    ctx.globalCompositeOperation = "destination-out";
+    ctx.globalCompositeOperation = 'destination-out';
     puffs(ctx, t, cx, cy, a, b, c - s, d - s);
-    ctx.globalCompositeOperation = "source-over";
+    ctx.globalCompositeOperation = 'source-over';
   }
 
   function sun(ctx, t, cx, cy, cw, s, color) {
     t /= 120000;
 
     var a = cw * 0.25 - s * 0.5,
-      b = cw * 0.32 + s * 0.5,
-      c = cw * 0.5 - s * 0.5,
-      i,
-      p,
-      cos,
-      sin;
+        b = cw * 0.32 + s * 0.5,
+        c = cw * 0.50 - s * 0.5,
+        i, p, cos, sin;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = s;
@@ -253,7 +273,7 @@ function timeConverter(UNIX_timestamp) {
     ctx.arc(cx, cy, a, 0, TAU, false);
     ctx.stroke();
 
-    for (i = 8; i--; ) {
+    for(i = 8; i--; ) {
       p = (t + i / 8) * TAU;
       cos = Math.cos(p);
       sin = Math.sin(p);
@@ -265,9 +285,9 @@ function timeConverter(UNIX_timestamp) {
     t /= 15000;
 
     var a = cw * 0.29 - s * 0.5,
-      b = cw * 0.05,
-      c = Math.cos(t * TAU),
-      p = c * TAU / -16;
+        b = cw * 0.05,
+        c = Math.cos(t * TAU),
+        p = c * TAU / -16;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = s;
@@ -278,14 +298,7 @@ function timeConverter(UNIX_timestamp) {
 
     ctx.beginPath();
     ctx.arc(cx, cy, a, p + TAU / 8, p + TAU * 7 / 8, false);
-    ctx.arc(
-      cx + Math.cos(p) * a * TWO_OVER_SQRT_2,
-      cy + Math.sin(p) * a * TWO_OVER_SQRT_2,
-      a,
-      p + TAU * 5 / 8,
-      p + TAU * 3 / 8,
-      true
-    );
+    ctx.arc(cx + Math.cos(p) * a * TWO_OVER_SQRT_2, cy + Math.sin(p) * a * TWO_OVER_SQRT_2, a, p + TAU * 5 / 8, p + TAU * 3 / 8, true);
     ctx.closePath();
     ctx.stroke();
   }
@@ -294,18 +307,15 @@ function timeConverter(UNIX_timestamp) {
     t /= 1350;
 
     var a = cw * 0.16,
-      b = TAU * 11 / 12,
-      c = TAU * 7 / 12,
-      i,
-      p,
-      x,
-      y;
+        b = TAU * 11 / 12,
+        c = TAU *  7 / 12,
+        i, p, x, y;
 
     ctx.fillStyle = color;
 
-    for (i = 4; i--; ) {
+    for(i = 4; i--; ) {
       p = (t + i / 4) % 1;
-      x = cx + (i - 1.5) / 1.5 * (i === 1 || i === 2 ? -1 : 1) * a;
+      x = cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a;
       y = cy + p * p * cw;
       ctx.beginPath();
       ctx.moveTo(x, y - s * 1.5);
@@ -318,21 +328,18 @@ function timeConverter(UNIX_timestamp) {
     t /= 750;
 
     var a = cw * 0.1875,
-      i,
-      p,
-      x,
-      y;
+        b = TAU * 11 / 12,
+        c = TAU *  7 / 12,
+        i, p, x, y;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = s * 0.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    for (i = 4; i--; ) {
+    for(i = 4; i--; ) {
       p = (t + i / 4) % 1;
-      x =
-        Math.floor(cx + (i - 1.5) / 1.5 * (i === 1 || i === 2 ? -1 : 1) * a) +
-        0.5;
+      x = Math.floor(cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a) + 0.5;
       y = cy + p * cw;
       line(ctx, x, y - s * 1.5, x, y + s * 1.5);
     }
@@ -341,28 +348,25 @@ function timeConverter(UNIX_timestamp) {
   function snow(ctx, t, cx, cy, cw, s, color) {
     t /= 3000;
 
-    var a = cw * 0.16,
-      b = s * 0.75,
-      u = t * TAU * 0.7,
-      ux = Math.cos(u) * b,
-      uy = Math.sin(u) * b,
-      v = u + TAU / 3,
-      vx = Math.cos(v) * b,
-      vy = Math.sin(v) * b,
-      w = u + TAU * 2 / 3,
-      wx = Math.cos(w) * b,
-      wy = Math.sin(w) * b,
-      i,
-      p,
-      x,
-      y;
+    var a  = cw * 0.16,
+        b  = s * 0.75,
+        u  = t * TAU * 0.7,
+        ux = Math.cos(u) * b,
+        uy = Math.sin(u) * b,
+        v  = u + TAU / 3,
+        vx = Math.cos(v) * b,
+        vy = Math.sin(v) * b,
+        w  = u + TAU * 2 / 3,
+        wx = Math.cos(w) * b,
+        wy = Math.sin(w) * b,
+        i, p, x, y;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = s * 0.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    for (i = 4; i--; ) {
+    for(i = 4; i--; ) {
       p = (t + i / 4) % 1;
       x = cx + Math.sin((p + i / 4) * TAU) * a;
       y = cy + p * cw;
@@ -377,225 +381,101 @@ function timeConverter(UNIX_timestamp) {
     t /= 30000;
 
     var a = cw * 0.21,
-      b = cw * 0.06,
-      c = cw * 0.21,
-      d = cw * 0.28;
+        b = cw * 0.06,
+        c = cw * 0.21,
+        d = cw * 0.28;
 
     ctx.fillStyle = color;
     puffs(ctx, t, cx, cy, a, b, c, d);
 
-    ctx.globalCompositeOperation = "destination-out";
+    ctx.globalCompositeOperation = 'destination-out';
     puffs(ctx, t, cx, cy, a, b, c - s, d - s);
-    ctx.globalCompositeOperation = "source-over";
+    ctx.globalCompositeOperation = 'source-over';
   }
 
+  /*
   var WIND_PATHS = [
-      [
-        -0.75,
-        -0.18,
-        -0.7219,
-        -0.1527,
-        -0.6971,
-        -0.1225,
-        -0.6739,
-        -0.091,
-        -0.6516,
-        -0.0588,
-        -0.6298,
-        -0.0262,
-        -0.6083,
-        0.0065,
-        -0.5868,
-        0.0396,
-        -0.5643,
-        0.0731,
-        -0.5372,
-        0.1041,
-        -0.5033,
-        0.1259,
-        -0.4662,
-        0.1406,
-        -0.4275,
-        0.1493,
-        -0.3881,
-        0.153,
-        -0.3487,
-        0.1526,
-        -0.3095,
-        0.1488,
-        -0.2708,
-        0.1421,
-        -0.2319,
-        0.1342,
-        -0.1943,
-        0.1217,
-        -0.16,
-        0.1025,
-        -0.129,
-        0.0785,
-        -0.1012,
-        0.0509,
-        -0.0764,
-        0.0206,
-        -0.0547,
-        -0.012,
-        -0.0378,
-        -0.0472,
-        -0.0324,
-        -0.0857,
-        -0.0389,
-        -0.1241,
-        -0.0546,
-        -0.1599,
-        -0.0814,
-        -0.1876,
-        -0.1193,
-        -0.1964,
-        -0.1582,
-        -0.1935,
-        -0.1931,
-        -0.1769,
-        -0.2157,
-        -0.1453,
-        -0.229,
-        -0.1085,
-        -0.2327,
-        -0.0697,
-        -0.224,
-        -0.0317,
-        -0.2064,
-        0.0033,
-        -0.1853,
-        0.0362,
-        -0.1613,
-        0.0672,
-        -0.135,
-        0.0961,
-        -0.1051,
-        0.1213,
-        -0.0706,
-        0.1397,
-        -0.0332,
-        0.1512,
-        0.0053,
-        0.158,
-        0.0442,
-        0.1624,
-        0.0833,
-        0.1636,
-        0.1224,
-        0.1615,
-        0.1613,
-        0.1565,
-        0.1999,
-        0.15,
-        0.2378,
-        0.1402,
-        0.2749,
-        0.1279,
-        0.3118,
-        0.1147,
-        0.3487,
-        0.1015,
-        0.3858,
-        0.0892,
-        0.4236,
-        0.0787,
-        0.4621,
-        0.0715,
-        0.5012,
-        0.0702,
-        0.5398,
-        0.0766,
-        0.5768,
-        0.089,
-        0.6123,
-        0.1055,
-        0.6466,
-        0.1244,
-        0.6805,
-        0.144,
-        0.7147,
-        0.163,
-        0.75,
-        0.18
+        downsample(63, upsample(8, [
+          -1.00, -0.28,
+          -0.75, -0.18,
+          -0.50,  0.12,
+          -0.20,  0.12,
+          -0.04, -0.04,
+          -0.07, -0.18,
+          -0.19, -0.18,
+          -0.23, -0.05,
+          -0.12,  0.11,
+           0.02,  0.16,
+           0.20,  0.15,
+           0.50,  0.07,
+           0.75,  0.18,
+           1.00,  0.28
+        ])),
+        downsample(31, upsample(16, [
+          -1.00, -0.10,
+          -0.75,  0.00,
+          -0.50,  0.10,
+          -0.25,  0.14,
+           0.00,  0.10,
+           0.25,  0.00,
+           0.50, -0.10,
+           0.75, -0.14,
+           1.00, -0.10
+        ]))
+      ];
+  */
+
+  var WIND_PATHS = [
+        [
+          -0.7500, -0.1800, -0.7219, -0.1527, -0.6971, -0.1225,
+          -0.6739, -0.0910, -0.6516, -0.0588, -0.6298, -0.0262,
+          -0.6083,  0.0065, -0.5868,  0.0396, -0.5643,  0.0731,
+          -0.5372,  0.1041, -0.5033,  0.1259, -0.4662,  0.1406,
+          -0.4275,  0.1493, -0.3881,  0.1530, -0.3487,  0.1526,
+          -0.3095,  0.1488, -0.2708,  0.1421, -0.2319,  0.1342,
+          -0.1943,  0.1217, -0.1600,  0.1025, -0.1290,  0.0785,
+          -0.1012,  0.0509, -0.0764,  0.0206, -0.0547, -0.0120,
+          -0.0378, -0.0472, -0.0324, -0.0857, -0.0389, -0.1241,
+          -0.0546, -0.1599, -0.0814, -0.1876, -0.1193, -0.1964,
+          -0.1582, -0.1935, -0.1931, -0.1769, -0.2157, -0.1453,
+          -0.2290, -0.1085, -0.2327, -0.0697, -0.2240, -0.0317,
+          -0.2064,  0.0033, -0.1853,  0.0362, -0.1613,  0.0672,
+          -0.1350,  0.0961, -0.1051,  0.1213, -0.0706,  0.1397,
+          -0.0332,  0.1512,  0.0053,  0.1580,  0.0442,  0.1624,
+           0.0833,  0.1636,  0.1224,  0.1615,  0.1613,  0.1565,
+           0.1999,  0.1500,  0.2378,  0.1402,  0.2749,  0.1279,
+           0.3118,  0.1147,  0.3487,  0.1015,  0.3858,  0.0892,
+           0.4236,  0.0787,  0.4621,  0.0715,  0.5012,  0.0702,
+           0.5398,  0.0766,  0.5768,  0.0890,  0.6123,  0.1055,
+           0.6466,  0.1244,  0.6805,  0.1440,  0.7147,  0.1630,
+           0.7500,  0.1800
+        ],
+        [
+          -0.7500,  0.0000, -0.7033,  0.0195, -0.6569,  0.0399,
+          -0.6104,  0.0600, -0.5634,  0.0789, -0.5155,  0.0954,
+          -0.4667,  0.1089, -0.4174,  0.1206, -0.3676,  0.1299,
+          -0.3174,  0.1365, -0.2669,  0.1398, -0.2162,  0.1391,
+          -0.1658,  0.1347, -0.1157,  0.1271, -0.0661,  0.1169,
+          -0.0170,  0.1046,  0.0316,  0.0903,  0.0791,  0.0728,
+           0.1259,  0.0534,  0.1723,  0.0331,  0.2188,  0.0129,
+           0.2656, -0.0064,  0.3122, -0.0263,  0.3586, -0.0466,
+           0.4052, -0.0665,  0.4525, -0.0847,  0.5007, -0.1002,
+           0.5497, -0.1130,  0.5991, -0.1240,  0.6491, -0.1325,
+           0.6994, -0.1380,  0.7500, -0.1400
+        ]
       ],
-      [
-        -0.75,
-        0.0,
-        -0.7033,
-        0.0195,
-        -0.6569,
-        0.0399,
-        -0.6104,
-        0.06,
-        -0.5634,
-        0.0789,
-        -0.5155,
-        0.0954,
-        -0.4667,
-        0.1089,
-        -0.4174,
-        0.1206,
-        -0.3676,
-        0.1299,
-        -0.3174,
-        0.1365,
-        -0.2669,
-        0.1398,
-        -0.2162,
-        0.1391,
-        -0.1658,
-        0.1347,
-        -0.1157,
-        0.1271,
-        -0.0661,
-        0.1169,
-        -0.017,
-        0.1046,
-        0.0316,
-        0.0903,
-        0.0791,
-        0.0728,
-        0.1259,
-        0.0534,
-        0.1723,
-        0.0331,
-        0.2188,
-        0.0129,
-        0.2656,
-        -0.0064,
-        0.3122,
-        -0.0263,
-        0.3586,
-        -0.0466,
-        0.4052,
-        -0.0665,
-        0.4525,
-        -0.0847,
-        0.5007,
-        -0.1002,
-        0.5497,
-        -0.113,
-        0.5991,
-        -0.124,
-        0.6491,
-        -0.1325,
-        0.6994,
-        -0.138,
-        0.75,
-        -0.14
-      ]
-    ],
-    WIND_OFFSETS = [{ start: 0.36, end: 0.11 }, { start: 0.56, end: 0.16 }];
+      WIND_OFFSETS = [
+        {start: 0.36, end: 0.11},
+        {start: 0.56, end: 0.16}
+      ];
 
   function leaf(ctx, t, x, y, cw, s, color) {
     var a = cw / 8,
-      b = a / 3,
-      c = 2 * b,
-      d = (t % 1) * TAU,
-      e = Math.cos(d),
-      f = Math.sin(d);
+        b = a / 3,
+        c = 2 * b,
+        d = (t % 1) * TAU,
+        e = Math.cos(d),
+        f = Math.sin(d);
 
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
@@ -604,12 +484,12 @@ function timeConverter(UNIX_timestamp) {
     ctx.lineJoin = "round";
 
     ctx.beginPath();
-    ctx.arc(x, y, a, d, d + Math.PI, false);
-    ctx.arc(x - b * e, y - b * f, c, d + Math.PI, d, false);
-    ctx.arc(x + c * e, y + c * f, b, d + Math.PI, d, true);
-    ctx.globalCompositeOperation = "destination-out";
+    ctx.arc(x        , y        , a, d          , d + Math.PI, false);
+    ctx.arc(x - b * e, y - b * f, c, d + Math.PI, d          , false);
+    ctx.arc(x + c * e, y + c * f, b, d + Math.PI, d          , true );
+    ctx.globalCompositeOperation = 'destination-out';
     ctx.fill();
-    ctx.globalCompositeOperation = "source-over";
+    ctx.globalCompositeOperation = 'source-over';
     ctx.stroke();
   }
 
@@ -617,77 +497,78 @@ function timeConverter(UNIX_timestamp) {
     t /= 2500;
 
     var path = WIND_PATHS[index],
-      a = (t + index - WIND_OFFSETS[index].start) % total,
-      c = (t + index - WIND_OFFSETS[index].end) % total,
-      e = (t + index) % total,
-      b,
-      d,
-      f,
-      i;
+        a = (t + index - WIND_OFFSETS[index].start) % total,
+        c = (t + index - WIND_OFFSETS[index].end  ) % total,
+        e = (t + index                            ) % total,
+        b, d, f, i;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = s;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    if (a < 1) {
+    if(a < 1) {
       ctx.beginPath();
 
       a *= path.length / 2 - 1;
-      b = Math.floor(a);
+      b  = Math.floor(a);
       a -= b;
       b *= 2;
       b += 2;
 
       ctx.moveTo(
-        cx + (path[b - 2] * (1 - a) + path[b] * a) * cw,
+        cx + (path[b - 2] * (1 - a) + path[b    ] * a) * cw,
         cy + (path[b - 1] * (1 - a) + path[b + 1] * a) * cw
       );
 
-      if (c < 1) {
+      if(c < 1) {
         c *= path.length / 2 - 1;
-        d = Math.floor(c);
+        d  = Math.floor(c);
         c -= d;
         d *= 2;
         d += 2;
 
-        for (i = b; i !== d; i += 2)
+        for(i = b; i !== d; i += 2)
           ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
 
         ctx.lineTo(
-          cx + (path[d - 2] * (1 - c) + path[d] * c) * cw,
+          cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
           cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
         );
-      } else
-        for (i = b; i !== path.length; i += 2)
+      }
+
+      else
+        for(i = b; i !== path.length; i += 2)
           ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
 
       ctx.stroke();
-    } else if (c < 1) {
+    }
+
+    else if(c < 1) {
       ctx.beginPath();
 
       c *= path.length / 2 - 1;
-      d = Math.floor(c);
+      d  = Math.floor(c);
       c -= d;
       d *= 2;
       d += 2;
 
       ctx.moveTo(cx + path[0] * cw, cy + path[1] * cw);
 
-      for (i = 2; i !== d; i += 2)
+      for(i = 2; i !== d; i += 2)
         ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
 
       ctx.lineTo(
-        cx + (path[d - 2] * (1 - c) + path[d] * c) * cw,
+        cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
         cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
       );
 
       ctx.stroke();
     }
 
-    if (e < 1) {
+    if(e < 1) {
       e *= path.length / 2 - 1;
-      f = Math.floor(e);
+      f  = Math.floor(e);
       e -= f;
       f *= 2;
       f += 2;
@@ -695,7 +576,7 @@ function timeConverter(UNIX_timestamp) {
       leaf(
         ctx,
         t,
-        cx + (path[f - 2] * (1 - e) + path[f] * e) * cw,
+        cx + (path[f - 2] * (1 - e) + path[f    ] * e) * cw,
         cy + (path[f - 1] * (1 - e) + path[f + 1] * e) * cw,
         cw,
         s,
@@ -705,32 +586,32 @@ function timeConverter(UNIX_timestamp) {
   }
 
   var Skycons = function(opts) {
-    this.list = [];
-    this.interval = null;
-    this.color = opts && opts.color ? opts.color : "black";
-    this.resizeClear = !!(opts && opts.resizeClear);
-  };
+        this.list        = [];
+        this.interval    = null;
+        this.color       = opts && opts.color ? opts.color : "black";
+        this.resizeClear = !!(opts && opts.resizeClear);
+      };
 
   Skycons.CLEAR_DAY = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     sun(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
   };
 
   Skycons.CLEAR_NIGHT = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     moon(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
   };
 
   Skycons.PARTLY_CLOUDY_DAY = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     sun(ctx, t, w * 0.625, h * 0.375, s * 0.75, s * STROKE, color);
     cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
@@ -738,8 +619,8 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.PARTLY_CLOUDY_NIGHT = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     moon(ctx, t, w * 0.667, h * 0.375, s * 0.75, s * STROKE, color);
     cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
@@ -747,16 +628,16 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.CLOUDY = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     cloud(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
   };
 
   Skycons.RAIN = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     rain(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
@@ -764,8 +645,8 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.SLEET = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     sleet(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
@@ -773,8 +654,8 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.SNOW = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
@@ -782,8 +663,8 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.WIND = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h);
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
 
     swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 0, 2, color);
     swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 1, 2, color);
@@ -791,21 +672,21 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.FOG = function(ctx, t, color) {
     var w = ctx.canvas.width,
-      h = ctx.canvas.height,
-      s = Math.min(w, h),
-      k = s * STROKE;
+        h = ctx.canvas.height,
+        s = Math.min(w, h),
+        k = s * STROKE;
 
     fogbank(ctx, t, w * 0.5, h * 0.32, s * 0.75, k, color);
 
     t /= 5000;
 
-    var a = Math.cos(t * TAU) * s * 0.02,
-      b = Math.cos((t + 0.25) * TAU) * s * 0.02,
-      c = Math.cos((t + 0.5) * TAU) * s * 0.02,
-      d = Math.cos((t + 0.75) * TAU) * s * 0.02,
-      n = h * 0.936,
-      e = Math.floor(n - k * 0.5) + 0.5,
-      f = Math.floor(n - k * 2.5) + 0.5;
+    var a = Math.cos((t       ) * TAU) * s * 0.02,
+        b = Math.cos((t + 0.25) * TAU) * s * 0.02,
+        c = Math.cos((t + 0.50) * TAU) * s * 0.02,
+        d = Math.cos((t + 0.75) * TAU) * s * 0.02,
+        n = h * 0.936,
+        e = Math.floor(n - k * 0.5) + 0.5,
+        f = Math.floor(n - k * 2.5) + 0.5;
 
     ctx.strokeStyle = color;
     ctx.lineWidth = k;
@@ -818,7 +699,7 @@ function timeConverter(UNIX_timestamp) {
 
   Skycons.prototype = {
     _determineDrawingFunction: function(draw) {
-      if (typeof draw === "string")
+      if(typeof draw === "string")
         draw = Skycons[draw.toUpperCase().replace(/-/g, "_")] || null;
 
       return draw;
@@ -826,15 +707,18 @@ function timeConverter(UNIX_timestamp) {
     add: function(el, draw) {
       var obj;
 
-      if (typeof el === "string") el = document.getElementById(el);
+      if(typeof el === "string")
+        el = document.getElementById(el);
 
       // Does nothing if canvas name doesn't exists
-      if (el === null) return;
+      if(el === null)
+        return;
 
       draw = this._determineDrawingFunction(draw);
 
       // Does nothing if the draw function isn't actually a function
-      if (typeof draw !== "function") return;
+      if(typeof draw !== "function")
+        return;
 
       obj = {
         element: el,
@@ -848,10 +732,11 @@ function timeConverter(UNIX_timestamp) {
     set: function(el, draw) {
       var i;
 
-      if (typeof el === "string") el = document.getElementById(el);
+      if(typeof el === "string")
+        el = document.getElementById(el);
 
-      for (i = this.list.length; i--; )
-        if (this.list[i].element === el) {
+      for(i = this.list.length; i--; )
+        if(this.list[i].element === el) {
           this.list[i].drawing = this._determineDrawingFunction(draw);
           this.draw(this.list[i], KEYFRAME);
           return;
@@ -862,10 +747,11 @@ function timeConverter(UNIX_timestamp) {
     remove: function(el) {
       var i;
 
-      if (typeof el === "string") el = document.getElementById(el);
+      if(typeof el === "string")
+        el = document.getElementById(el);
 
-      for (i = this.list.length; i--; )
-        if (this.list[i].element === el) {
+      for(i = this.list.length; i--; )
+        if(this.list[i].element === el) {
           this.list.splice(i, 1);
           return;
         }
@@ -873,8 +759,11 @@ function timeConverter(UNIX_timestamp) {
     draw: function(obj, time) {
       var canvas = obj.context.canvas;
 
-      if (this.resizeClear) canvas.width = canvas.width;
-      else obj.context.clearRect(0, 0, canvas.width, canvas.height);
+      if(this.resizeClear)
+        canvas.width = canvas.width;
+
+      else
+        obj.context.clearRect(0, 0, canvas.width, canvas.height);
 
       obj.drawing(obj.context, time, this.color);
     },
@@ -884,13 +773,16 @@ function timeConverter(UNIX_timestamp) {
       this.pause();
       this.interval = requestInterval(function() {
         var now = Date.now(),
-          i;
+            i;
 
-        for (i = self.list.length; i--; ) self.draw(self.list[i], now);
+        for(i = self.list.length; i--; )
+          self.draw(self.list[i], now);
       }, 1000 / 60);
     },
     pause: function() {
-      if (this.interval) {
+      var i;
+
+      if(this.interval) {
         cancelInterval(this.interval);
         this.interval = null;
       }
@@ -898,4 +790,4 @@ function timeConverter(UNIX_timestamp) {
   };
 
   global.Skycons = Skycons;
-})(this);
+}(this));

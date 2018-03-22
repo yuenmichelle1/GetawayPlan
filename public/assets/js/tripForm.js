@@ -11,18 +11,9 @@ $("#createNewTrip").on("click", function() {
   var zipCode = $("#postal_code").val();
   var startDate = $("#from").val();
   var endDate = $("#to").val();
-  var tripName = $("#tripName")
-    .val()
-    .trim();
+  var tripName = $("#tripName").val().trim();
   var tripPhotoRefId;
 
-  console.log(locationCity);
-  console.log(locationState);
-  console.log(locationCountry);
-  console.log(zipCode);
-  console.log(startDate);
-  console.log(endDate);
-  console.log(autocompleteLocation);
   checkDataFilled();
 
   function checkDataFilled() {
