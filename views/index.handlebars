@@ -1,32 +1,61 @@
-
-{{!-- display trip data --}}
-<h1>{{ name }}</h1>
-<h3>{{ location }}</h3>
-<h3>{{ dates }}</h3>
-<h3>{{ photo }}</h3>
-
 {{!-- display saved events --}}
 <div class="row">
-    <div class="col-md-6 events">
-        <ul>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h2 class="sub-title-text">Saved Points of Interest</h2>
+        <div class="row saved-pois">
             {{#each activities}}
-                <p>activity name:  {{this.name}}</p>
-                <p>activity description: {{this.description}}</p>
-                <p>activity url:  {{this.url}}</p>
-                <p>activity photo:  {{this.photo}}</p>
-            {{/each}}
-        </ul>
-    </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-    {{!-- display saved restaurant --}}
-    <div class="col-md-6 restaurants">
-        <ul>
-            {{#each restaurants}}
-                <p>restaurant name:  {{name}}</p>
-                <p>restaurant address:  {{address}}</p>
-                <p>restaurant rating:  {{rating}}</p>
-                <p>restaurant photo:  {{photo}}</p>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                        <!-- Photo -->
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                {{this.photo}}
+                            </div>
+                            <!-- Text -->
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <h3 class="poi-name">{{this.name}}</h3>
+                                <p class="poi-desc">{{this.description}}</p>
+                                <br>
+                                <a href="{{this.url}}">Get Directions</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <button class="btn btn-warning my-2 my-sm-0 nav-btn save-btn" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
             {{/each}}
-        </ul>
+        </div>
+        <h2 class="sub-title-text">Saved Restaurants</h2>
+        <div class="row saved-rest">
+            {{#each restaurants}}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                        <!-- Photo -->
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                {{this.photo}}
+                            </div>
+                            <!-- Text -->
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <h3 class="rest-name">{{this.name}}</h3>
+                                <p class="rest-address">{{this.address}}</p>
+                                <p class="rest-rating">{{this.rating}}</p>
+                                <br>
+                                <a href="{{this.url}}">Get Directions</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <button class="btn btn-warning my-2 my-sm-0 nav-btn save-btn" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
     </div>
 </div>

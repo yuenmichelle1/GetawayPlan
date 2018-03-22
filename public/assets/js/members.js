@@ -1,32 +1,42 @@
 $(document).ready(function() {
-    // This file just does a GET request to figure out which user is logged in
-    // and updates the HTML on the page
-    var userId;
-    $.get("/api/user_data").then(function(data) {
-        $(".member-name").text(data.email);
-        userId = data.id;
-    });
-    //  Grab trip Data then display Weather given trip
-    $.get("/api/trip_data").then(function(data) {
-        $(".tripName").text(`Trip Name: ${data.name}`);
-        $(".tripLocation").text(`Trip Location: ${data.location}`);
-        $(".dates").text(`${data.startdate} to ${data.enddate}`);
-        var tripData = data;
 
-        var startdate = new Date(tripData.startdate);
-        var enddate = new Date(tripData.enddate);
-        var daysArr = getDates(startdate, enddate);
-        var bgPhoto = tripData.background_photo;
-        displayLocationPhoto(bgPhoto);
-        //get Lat and Long of trip  then display data //simplifyThis
-        //3 DAY FORECAST OF YOUR TRIP
-        getLatandLong(tripData, daysArr[0].getTime() / 1000, "icon1");
-        getLatandLong(tripData, daysArr[1].getTime() / 1000, "icon2");
-        getLatandLong(tripData, daysArr[2].getTime() / 1000, "icon3");
-    });
-    $("#createTrip").on("click", function() {
-        window.location.href = `/${userId}/trips/new`;
-    });
+  // This file just does a GET request to figure out which user is logged in
+  // and updates the HTML on the page
+  var userId;
+  $.get("/api/user_data").then(function(data) {
+    $(".member-name").text(data.email);
+    userId = data.id;
+  });
+  //  Grab trip Data then display Weather given trip
+  $.get("/api/trip_data").then(function(data) {
+    $(".tripName").text(`${data.name}`);
+    $(".tripLocation").text(`${data.location}`);
+    $(".tripDates").text(`${data.startdate} - ${data.enddate}`);
+    var tripData = data;
+
+    var startdate = new Date(tripData.startdate);
+    var enddate = new Date(tripData.enddate);
+    var daysArr = getDates(startdate, enddate);
+    var bgPhoto= tripData.background_photo;
+    displayLocationPhoto(bgPhoto);
+    //get Lat and Long of trip  then display data //simplifyThis
+    //3 DAY FORECAST OF YOUR TRIP
+    getLatandLong(tripData, daysArr[0].getTime()/1000);
+    getLatandLong(tripData, daysArr[1].getTime()/1000);
+    getLatandLong(tripData, daysArr[2].getTime()/1000);
+  });
+  $("#createTrip").on("click", function() {
+    window.location.href = `/${userId}/trips/new`;
+  });
+
+  $("#addPoi").on("click", function() {
+    window.location.href = `pois/new`;
+  });
+
+  $("#addRest").on("click", function() {
+    window.location.href = `/restaurants/new`;
+  });
+
 });
 
 function displayLocationPhoto(photoRefID) {
