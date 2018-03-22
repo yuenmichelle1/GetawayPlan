@@ -25,10 +25,12 @@ $(document).ready(function() {
       email: email,
       password: password
     }).then(function(data) { 
-        window.location.replace(data);
+        window.location.replace(data);        
       })
       .catch(function(err) {
         console.log(err);
+        $(".msg").text("Please enter the correct email and password");
+        $("#wrongPWD").fadeIn(500);
       });
   }
 });
