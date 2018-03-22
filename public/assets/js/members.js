@@ -9,9 +9,9 @@ $(document).ready(function() {
   });
   //  Grab trip Data then display Weather given trip
   $.get("/api/trip_data").then(function(data) {
-    $(".tripName").text(`Trip Name: ${data.name}`);
-    $(".tripLocation").text(`Trip Location: ${data.location}`);
-    $(".dates").text(`${data.startdate} to ${data.enddate}`);
+    $(".tripName").text(`${data.name}`);
+    $(".tripLocation").text(`${data.location}`);
+    $(".tripDates").text(`${data.startdate} - ${data.enddate}`);
     var tripData = data;
 
     var startdate = new Date(tripData.startdate);
@@ -27,6 +27,14 @@ $(document).ready(function() {
   });
   $("#createTrip").on("click", function() {
     window.location.href = `/${userId}/trips/new`;
+  });
+
+  $("#addPoi").on("click", function() {
+    window.location.href = `pois/new`;
+  });
+
+  $("#addRest").on("click", function() {
+    window.location.href = `/restaurants/new`;
   });
 });
 

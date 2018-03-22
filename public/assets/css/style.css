@@ -267,6 +267,15 @@ form.signup {
     cursor: pointer;
 }
 
+/* Dashboard */
+.newTrip-btn {
+    width: 200px;
+}
+
+.add-btn {
+    width: 300px;
+}
+
 /* Bootstrap Media Queries */
 @media all and (max-width: 991px) {
     .content-text-right {

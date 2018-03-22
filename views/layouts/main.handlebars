@@ -1,14 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Getaway Plan: Plan Your Perfect Getaway</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>GetAway Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans|Playfair+Display" rel="stylesheet">
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 </head>
+
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded position-fixed fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/api/trip/dashboard">
+            <img id="nav-img" src="/assets/img/sun-umbrella.svg"/>GetAway</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <span class="member-name"></span>
+                <a href="./index.html">
+                    <button class="btn btn-warning my-2 my-sm-0 nav-btn login-btn" type="button">Logout</button>
+                </a>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Spacing -->
+    <div class="dashboard-spacing"></div>
+    <!-- Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 trip-bg">
+                <div class="row">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <div class="myTrip">
+                            <h3 class="tripName"></h3>
+                            <h1 class="tripLocation"></h1>
+                            <h2 class="tripDates"></h2>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-">
+                        <div class="weather-title-div"></div>
+                        <div class="weather weather1"><span class="weather1-text"></span><canvas id="icon1" class="weathericon" width="128" height="128"></canvas></div>
+                        <div class="weather weather2"><span class="weather2-text"></span><canvas id="icon2" class="weathericon" width="128" height="128"></canvas></div>
+                        <div class="weather weather3"><span class="weather3-text"></span><canvas id="icon3" class="weathericon" width="128" height="128"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add POI/Restaurant -->
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                        <button class="btn btn-primary my-2 my-sm-0 nav-btn add-btn menu-links" id="addPoi" type="button">Add A Point of Interest</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                        <button class="btn btn-primary my-2 my-sm-0 nav-btn add-btn menu-links" id="addRest" type="button">Add A Restaurant</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
     {{{ body }}}
+
+    <!-- Create New Trip Button -->
+    <div class="row btn-row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <button class="btn btn-warning my-2 my-sm-0 nav-btn newTrip-btn menu-links" id="createTrip" type="button">+ Add A New Trip</button>
+        </div>
+    </div>
+    
+    </div>
+    <!-- End Container-->
 </body>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+    crossorigin="anonymous"></script>
+<script src="assets/js/skycons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"></script>
+<script src="/assets/js/members.js"></script>
+
 </html>
