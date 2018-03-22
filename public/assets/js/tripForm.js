@@ -1,7 +1,8 @@
 $("#createNewTrip").on("click", function() {
   var userId;
-  $.get("/api/user_data").then(function(data) {
+  $.get("/api/user_data", function(data) {
     userId = data.id;
+    console.log(userId)
   });
   //
   var autocompleteLocation = $("#autocomplete").val();

@@ -86,9 +86,12 @@ module.exports = function (app) {
     })
 
     app.get("/api/user_data", function(req, res) {
+
         if (!req.user) {
             res.json({});
+            console.log("user logged off")
         } else {
+            console.log("user is on")
             res.json({
                 email: req.user.email,
                 id: req.user.id

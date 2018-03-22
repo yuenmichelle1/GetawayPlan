@@ -41,7 +41,19 @@ $(document).ready(function() {
     })
       .then(function(data) {
         if(data === "success"){
-          window.location.replace("/members.html");
+
+
+          $.post("/api/login", {
+            email: email,
+            password: password
+          }).then(function(data) { 
+
+              window.location.replace(data);        
+            })
+            .catch(function(err) {
+              console.log(err);
+            });
+
         } else {
           console.log(data)
           $(".msg").text(data.errors[0].message);
@@ -52,8 +64,9 @@ $(document).ready(function() {
       .catch(handleLoginErr);
   }
 // somehow the error not caught
-  function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
-    $("#alert").fadeIn(500);
-  }
+function handleLoginErr(err) {
+  $("#alert .msg").text(err.responseJSON);
+  $("#alert").fadeIn(500);
+}
+
 });
