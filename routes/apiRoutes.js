@@ -6,10 +6,6 @@ var path = require("path");
 
 
 module.exports = function (app) {
-    
-    app.post("/api/login", passport.authenticate("local"), function(req, res) {
-        res.json("/api/trip/dashboard");
-    });
 
     app.get("/api/trip/dashboard", isAuthenticated, function (req, res) {
         var userID = req.user.id;
@@ -41,10 +37,16 @@ module.exports = function (app) {
                 };
                 res.render("index", resObj)
             } else {
-                res.sendFile(path.join(__dirname, "../public/members.html"));
+                res.redirect("/members")
+                // res.sendFile(path.join(__dirname, "../public/members.html"));
             }
         })        
     })
+
+        
+    app.post("/api/login", passport.authenticate("local"), function(req, res) {
+        res.json("/api/trip/dashboard");
+    });
 
     app.post("/api/signup", function (req, res) {
         db.User.create({
@@ -98,17 +100,6 @@ module.exports = function (app) {
         db.Trip.findAll({}).then(function(trip){
             res.json(trip.reverse()[0]);
         })
-    });
-
-    app.get("/api/user_data", function(req, res) {
-        if (!req.user) {
-            res.json({});
-        } else {
-            res.json({
-                email: req.user.email,
-                id: req.user.id
-            });
-        }
     });
     
 };
