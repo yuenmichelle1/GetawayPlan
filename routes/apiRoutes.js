@@ -6,14 +6,10 @@ var path = require("path");
 
 
 module.exports = function (app) {
-    
-    app.post("/api/login", passport.authenticate("local"), function(req, res) {
-        res.json("/api/trip/dashboard");
-      });
 
-    app.get('/api/trip/dashboard', isAuthenticated, function (req, res) {
+    app.get("/api/trip/dashboard", isAuthenticated, function (req, res) {
         var userID = req.user.id;
-
+        console.log("user ID: " + userID)
         db.Trip.findAll({
             where: {
                 UserId: userID
@@ -35,17 +31,22 @@ module.exports = function (app) {
                     location: tripData.location,
                     startDate: tripData.startdate,
                     endData: tripData.enddate,
-                    // photo: trip.background_photo,
+                    photo: trip.background_photo,
                     restaurants: tripData.Restaurants,
                     activities: tripData.Activities
                 };
                 res.render("index", resObj)
             } else {
-                res.sendFile(path.join(__dirname, "../public/members.html"));
+                res.redirect("/members")
+                // res.sendFile(path.join(__dirname, "../public/members.html"));
             }
-        })
-        
+        })        
     })
+
+        
+    app.post("/api/login", passport.authenticate("local"), function(req, res) {
+        res.json("/api/trip/dashboard");
+    });
 
     app.post("/api/signup", function (req, res) {
         db.User.create({
@@ -54,15 +55,11 @@ module.exports = function (app) {
             phoneNumber: req.body.phoneNumber,
             wantsTextNotification: req.body.wantsTextNotification
         }).then(function () {
-            res.json("/members");
+            res.json("success");
         }).catch(function (err) {
             res.json(err);
         });
     });
-
-    app.get("/members", function(req, res) {
-        res.sendFile(path.join(__dirname, "../public/members.html"));
-    })
 
     app.post("/api/restaurant", function (req, res) {
         db.Restaurant.create(req.body).then(function (result) {
@@ -87,6 +84,22 @@ module.exports = function (app) {
             });
         })
     })
-    
 
+    app.get("/api/user_data", function(req, res) {
+        if (!req.user) {
+            res.json({});
+        } else {
+            res.json({
+                email: req.user.email,
+                id: req.user.id
+            });
+        }
+    });
+
+    app.get("/api/trip_data", function(req,res){
+        db.Trip.findAll({}).then(function(trip){
+            res.json(trip.reverse()[0]);
+        })
+    });
+    
 };

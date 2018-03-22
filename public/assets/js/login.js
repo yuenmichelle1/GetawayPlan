@@ -4,6 +4,7 @@ $(document).ready(function() {
   var passwordInput = $("input#password-input");
 
   loginForm.on("submit", function(event) {
+    console.log("clicked")
     event.preventDefault();
     var userData = {
       email: emailInput.val().trim(),
@@ -23,12 +24,13 @@ $(document).ready(function() {
     $.post("/api/login", {
       email: email,
       password: password
-    }).then(function(data) {
-  
-        window.location.replace(data);
+    }).then(function(data) { 
+        window.location.replace(data);        
       })
       .catch(function(err) {
         console.log(err);
+        $(".msg").text("Please enter the correct email and password");
+        $("#wrongPWD").fadeIn(500);
       });
   }
 });

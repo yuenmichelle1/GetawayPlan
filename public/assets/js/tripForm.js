@@ -11,18 +11,9 @@ $("#createNewTrip").on("click", function() {
   var zipCode = $("#postal_code").val();
   var startDate = $("#from").val();
   var endDate = $("#to").val();
-  var tripName = $("#tripName")
-    .val()
-    .trim();
+  var tripName = $("#tripName").val().trim();
   var tripPhotoRefId;
 
-  console.log(locationCity);
-  console.log(locationState);
-  console.log(locationCountry);
-  console.log(zipCode);
-  console.log(startDate);
-  console.log(endDate);
-  console.log(autocompleteLocation);
   checkDataFilled();
 
   function checkDataFilled() {
@@ -80,7 +71,7 @@ $("#createNewTrip").on("click", function() {
       data: newTrip
     }).then(function() {
       console.log("new trip made");
-      window.location.href = "/members";
+      window.location.href = "/api/trip/dashboard";
     });
   }
 });
@@ -145,28 +136,9 @@ function initAutocomplete() {
 
   // When the user selects an address from the dropdown, populate the address
   // fields in the form.
-  autocomplete.addListener("place_changed", fillInAddress);
+  // autocomplete.addListener("place_changed", fillInAddress);
 }
 
-function fillInAddress() {
-  // Get the place details from the autocomplete object.
-  var place = autocomplete.getPlace();
-
-  for (var component in componentForm) {
-    document.getElementById(component).value = "";
-    document.getElementById(component).disabled = false;
-  }
-
-  // Get each component of the address from the place details
-  // and fill the corresponding field on the form.
-  for (var i = 0; i < place.address_components.length; i++) {
-    var addressType = place.address_components[i].types[0];
-    if (componentForm[addressType]) {
-      var val = place.address_components[i][componentForm[addressType]];
-      document.getElementById(addressType).value = val;
-    }
-  }
-}
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.

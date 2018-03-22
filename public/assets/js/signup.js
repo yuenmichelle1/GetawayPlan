@@ -40,12 +40,18 @@ $(document).ready(function() {
       wantsTextNotification: allowText
     })
       .then(function(data) {
-        window.location.replace(data);
+        if(data === "success"){
+          window.location.replace("/members.html");
+        } else {
+          console.log(data)
+          $(".msg").text(data.errors[0].message);
+          $("#alert").fadeIn(500);
+        }
         // If there's an error, handle it by throwing up a boostrap alert
       })
       .catch(handleLoginErr);
   }
-
+// somehow the error not caught
   function handleLoginErr(err) {
     $("#alert .msg").text(err.responseJSON);
     $("#alert").fadeIn(500);
