@@ -47,6 +47,10 @@
     font-size: 1em;
 }
 
+.rest-direction, .rest-rating {
+    color: #D5842E;
+    font-size: 1em;
+}
 .poi-btn, .rest-btn {
     text-align: center;
 }

@@ -1,6 +1,6 @@
-$(function() {
-    
-$(".deleteActivity").on("click", function () {
+$(function () {
+
+    $(".deleteActivity").on("click", function () {
         var id = $(this).data("id");
         console.log(id);
         console.log("click works");
