@@ -69,7 +69,10 @@ $(function () {
             var id;
             var btnstate = $(this).data("state");
             if (btnstate === 0) {
-                $(this).text("SAVED");
+                $(this).text("Saved To Your Trip");
+                $(this).css('background-color', '#0275d8');
+                $(this).css('border', '2px solid #0275d8');
+                $(this).css('border-color', '#0275d8');
                 $(this).data("state", 1);
 
             var info = {

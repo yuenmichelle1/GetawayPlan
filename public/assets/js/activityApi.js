@@ -43,7 +43,7 @@ $(function () {
     }
 
     var addSaveButton = function (activityInfo, select_col) {
-        var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn saveRestaurant'>").text("+ Add To My Trip");
+        var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn saveRestaurant saveActivity'>").text("+ Add To My Trip");
         // why setting attribute on button to activity object property:values?
         button.attr(activityInfo);
         select_col.append(button);
@@ -54,7 +54,10 @@ $(function () {
             var id;
             var btnstate = $(this).data("state");
             if (btnstate === 0) {
-                $(this).text("SAVED");
+                $(this).text("Saved To Your Trip");
+                $(this).css('background-color', '#0275d8');
+                $(this).css('border', '2px solid #0275d8');
+                $(this).css('border-color', '#0275d8');
                 $(this).data("state", 1);
                 var info = {
                     name: $(this).data("activityname"),
