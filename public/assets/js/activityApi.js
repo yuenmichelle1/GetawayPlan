@@ -73,7 +73,10 @@ $(function () {
                     })
 
                 } else {
-                    $(this).text("SAVE");
+                    $(this).text("+ Add To My Trip");
+                    $(this).css('background-color', '');
+                    $(this).css('border', '');
+                    $(this).css('border-color', '');
                     $(this).data("state", 0);
                     var info = {
                         name: $(this).data("activityname"),
