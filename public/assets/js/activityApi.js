@@ -22,9 +22,9 @@ $(function () {
                 "data-activityid": 0
             }
             var newActDiv = $("<div class='row activity'>");
-            var photo_col = $("<div class='col-md-3'>");
-            var info_col = $("<div class='col-md-6'>");
-            var select_col = $("<div class='col-md-3'>");
+            var photo_col = $("<div class='col-md-3 poi-pic'>");
+            var info_col = $("<div class='col-md-6 poi-info'>");
+            var select_col = $("<div class='col-md-3 poi-btn'>");
 
             addInfoToCols(activityInfo, photo_col, info_col);
             addSaveButton(activityInfo, select_col)
@@ -35,15 +35,15 @@ $(function () {
     }
     var addInfoToCols = function (activityInfo, photo_col, info_col) {
         var imgDiv = $(`<a href=${activityInfo["data-activityurl"]}><img src=${activityInfo["data-activityphoto"]} alt="activity-photo">`);
-        var actNameDiv = $("<h4>").text(activityInfo["data-activityname"]);
-        var actDescDiv = $("<p>").text(activityInfo["data-activitydescription"]);
-        var mapUrlDiv = $(`<a href=${activityInfo["data-activitydirections"]}>Directions</a>`);
+        var actNameDiv = $("<h4 class='poi-name'>").text(activityInfo["data-activityname"]);
+        var actDescDiv = $("<p class='poi-description'>").text(activityInfo["data-activitydescription"]);
+        var mapUrlDiv = $(`<a class='poi-direction' href=${activityInfo["data-activitydirections"]}>Directions</a>`);
         photo_col.append(imgDiv);
         info_col.append(actNameDiv, actDescDiv, mapUrlDiv);
     }
 
     var addSaveButton = function (activityInfo, select_col) {
-        var button = $("<button class='btn-primary saveActivity'>").text("SAVE");
+        var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn saveRestaurant'>").text("+ Add To My Trip");
         // why setting attribute on button to activity object property:values?
         button.attr(activityInfo);
         select_col.append(button);
