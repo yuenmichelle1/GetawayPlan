@@ -110,16 +110,16 @@ $(function () {
 
     //   coordinates need to come from the geo api call
     var query = `https://api.sygictravelapi.com/1.0/en/places/list?location=${lat},${lng}&level=poi&limit=20`;
-    $("#search").on("click", function () {
-        $.ajax({
-            url: query,
-            method: "GET",
-            headers: {
-                "x-api-key": "Cy0Gz9HmVx1Kn9OL5U5TZ7ecFuoUigxY2kEH4God"
-            }
-        }).done(function (response) {
-            addNewActivityRows(response);
-        });
+    
+    $.ajax({
+        url: query,
+        method: "GET",
+        headers: {
+            "x-api-key": "Cy0Gz9HmVx1Kn9OL5U5TZ7ecFuoUigxY2kEH4God"
+        }
+    }).done(function (response) {
+        addNewActivityRows(response);
     });
+ 
 });
 });
