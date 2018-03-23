@@ -76,7 +76,10 @@ function getLatandLong(tripData, time, icon, divClass) {
 }
 
 function displayWeather(tripData, time, geolocation, icon, divClass) {
-    var apiWeatherKey = "bd17eb5ba2562be86fea1fd5d3d248f7";
+    // first key used
+    // var apiWeatherKey = "bd17eb5ba2562be86fea1fd5d3d248f7";
+    // new key
+    var apiWeatherKey = "8a47f5146cb7ce1193f0eb89032c20d9";
     // Either be a UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone]. timezone should either be omitted (to refer to local time for the location being requested), Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
     var queryURL_Weather = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiWeatherKey}/${geolocation},${time}`;
 
