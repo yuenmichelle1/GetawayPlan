@@ -2,7 +2,7 @@ $("#createNewTrip").on("click", function() {
   var userId;
   $.get("/api/user_data", function(data) {
     userId = data.id;
-    console.log(userId)
+    console.log(userId);
   });
   //
   var autocompleteLocation = $("#autocomplete").val();
@@ -12,7 +12,9 @@ $("#createNewTrip").on("click", function() {
   var zipCode = $("#postal_code").val();
   var startDate = $("#from").val();
   var endDate = $("#to").val();
-  var tripName = $("#tripName").val().trim();
+  var tripName = $("#tripName")
+    .val()
+    .trim();
   var tripPhotoRefId;
 
   checkDataFilled();
@@ -45,7 +47,10 @@ $("#createNewTrip").on("click", function() {
         url: queryURL_pictures,
         method: "GET"
       }).done(function(response) {
-        tripPhotoRefId = response.results[0].photos[0].photo_reference;
+        var bigPhotoResults = response.results.sort(function(resultA, resultB) {
+          return +resultB.photos[0].width - +resultA.photos[0].width;
+        });
+        tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
         sendData(tripPhotoRefId);
       });
     });
@@ -139,7 +144,6 @@ function initAutocomplete() {
   // fields in the form.
   // autocomplete.addListener("place_changed", fillInAddress);
 }
-
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
