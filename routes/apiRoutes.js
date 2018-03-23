@@ -104,5 +104,27 @@ module.exports = function (app) {
             res.json(trip.reverse()[0]);
         })
     });
+
+   app.delete("/api/activity/:id", (req, res) => {
+        db.Activity.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(result => { 
+            return result.affectedRows == 0 ?
+            res.status(404).end() : res.status(200).end()    
+        })
+    })
+
+    app.delete("/api/restaurant/:id", (req, res) => {
+        db.Restaurant.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(result => { 
+            return result.affectedRows == 0 ?
+            res.status(404).end() : res.status(200).end()    
+        })
+    })
     
 };

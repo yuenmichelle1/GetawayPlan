@@ -28,6 +28,14 @@ module.exports = function (sequelize, DataTypes){
             type: DataTypes.TEXT,
             allowNull: false,
             defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg"
+        },
+        
+        directions: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isUrl: true
+            }
         }
     })
 

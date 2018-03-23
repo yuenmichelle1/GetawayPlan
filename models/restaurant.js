@@ -21,7 +21,7 @@ module.exports = function (sequelize, DataTypes){
         },
 
         photo:{
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
             defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg",
             validate: {

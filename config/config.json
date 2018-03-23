@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "MSNickers4",
     "database": "getaway_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
