@@ -21,9 +21,9 @@ $(document).ready(function() {
     displayLocationPhoto(bgPhoto);
     //get Lat and Long of trip  then display data //simplifyThis
     //3 DAY FORECAST OF YOUR TRIP
-    getLatandLong(tripData, daysArr[0].getTime()/1000, "icon1");
-    getLatandLong(tripData, daysArr[1].getTime()/1000, "icon2");
-    getLatandLong(tripData, daysArr[2].getTime()/1000, "icon3");
+    getLatandLong(tripData, daysArr[0].getTime()/1000, "icon1", "weather1-text");
+    getLatandLong(tripData, daysArr[1].getTime()/1000, "icon2", "weather2-text");
+    getLatandLong(tripData, daysArr[2].getTime()/1000, "icon3", "weather3-text");
   });
   $("#createTrip").on("click", function() {
     window.location.href = `/${userId}/trips/new`;
@@ -50,7 +50,7 @@ function displayLocationPhoto(photoRefID) {
     $('.trip-bg').css('background-blend-mode', `overlay`);
 }
 
-function getLatandLong(tripData, time, icon) {
+function getLatandLong(tripData, time, icon, divClass) {
     var geoAPIKey = "AIzaSyCrxhIkepDpKvWOFxZo5ypgb1OBpf7hcsw";
     var queryURL_geo = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=${tripData}&key=${geoAPIKey}`;
     $.ajax({
@@ -59,11 +59,11 @@ function getLatandLong(tripData, time, icon) {
     }).done(function(response) {
         var geo = response.results[0].geometry.location;
         var geoLocation = `${geo.lat},${geo.lng}`;
-        displayWeather(tripData, time, geoLocation, icon);
+        displayWeather(tripData, time, geoLocation, icon, divClass);
     });
 }
 
-function displayWeather(tripData, time, geolocation, icon) {
+function displayWeather(tripData, time, geolocation, icon, divClass) {
     var apiWeatherKey = "bd17eb5ba2562be86fea1fd5d3d248f7";
     // Either be a UNIX time (that is, seconds since midnight GMT on 1 Jan 1970) or a string formatted as follows: [YYYY]-[MM]-[DD]T[HH]:[MM]:[SS][timezone]. timezone should either be omitted (to refer to local time for the location being requested), Z (referring to GMT time), or +[HH][MM] or -[HH][MM] for an offset from GMT in hours and minutes.
     var queryURL_Weather = `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${apiWeatherKey}/${geolocation},${time}`;
@@ -77,6 +77,7 @@ function displayWeather(tripData, time, geolocation, icon) {
         //add your weatherIcon here
         icons.set(icon, weatherIcon);
         icons.play();
+        displayTime(divClass,response.currently.time, response.currently.apparentTemperature);
         var weatherAndtimeDiv = `<div class="container"> 
       ${timeConverter(response.currently.time)}
         <div class="row">Weather: ${
@@ -87,6 +88,11 @@ function displayWeather(tripData, time, geolocation, icon) {
         $(".time").append(weatherAndtimeDiv);
     });
 }
+
+function displayTime(cl, date, temp) {
+    $(`.${cl}`).text(`${timeConverter(date)}:${temp}°`);
+}
+
 // Returns an array of dates between the two dates
 var getDates = function(startDate, endDate) {
     var dates = [],
