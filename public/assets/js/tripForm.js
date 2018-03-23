@@ -43,9 +43,11 @@ $("#createNewTrip").on("click", function() {
         url: queryURL_pictures,
         method: "GET"
       }).done(function(response) {
-        // var bigPhotoResults = response.results.sort(function(resultA, resultB) {
-        //   return parseInt(resultB.photos[0].width) - parseInt(resultA.photos[0].width);
-        // })
+        var bigPhotoResults = response.results.sort(function(resultA, resultB) {
+          if (resultA.photos && resultB.photos){
+            return parseInt(resultB.photos[0].width) - parseInt(resultA.photos[0].width);
+          }  
+        })
          if (!response.results[0].photos){
           tripPhotoRefId = null;
         }
