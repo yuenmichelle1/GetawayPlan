@@ -40,7 +40,8 @@ $(document).ready(function() {
 });
 
 function displayLocationPhoto(photoRefID) {
-    var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+    // var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+    var photoAPIKey = "AIzaSyBxMhiK9gIVQw4-_44ToFukjwwmJ1pmT-w";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
     $('.trip-bg').css('background', `url("${photoURL}") no-repeat center fixed`);
