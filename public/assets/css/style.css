@@ -316,16 +316,16 @@ form.signup {
 
 #addPoi {
     height: 50px;
-    width: 85%;
-    margin-left: 109px;
+    width: 546px;
+    margin-left: -15px;
     border-radius: 0;
     border-bottom-left-radius: 10px;
 }
 
 #addRest {
     height: 50px;
-    width: 82%;
-    margin-right: 130px;
+    width: 547px;
+    margin-left: -16px;
     border-radius: 0;
     border-bottom-right-radius: 10px;
 }
