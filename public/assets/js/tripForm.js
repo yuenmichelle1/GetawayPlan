@@ -1,26 +1,21 @@
 $("#createNewTrip").on("click", function() {
   var userId;
- 
-  $.get("/api/user_data", function(data) {
-    userId = data.id;
-    console.log(userId);
-  });
-  //
   var autocompleteLocation = $("#autocomplete").val();
-  var locationCity = $("#locality").val();
-  var locationState = $("#administrative_area_level_1").val();
-  var locationCountry = $("#country").val();
-  var zipCode = $("#postal_code").val();
   var startDate = $("#from").val();
   var endDate = $("#to").val();
   var tripName = $("#tripName").val().trim();
   var tripPhotoRefId;
- 
 
-  checkDataFilled();
+  $.get("/api/user_data", function(data) {
+    userId = data.id;
+    console.log(userId);
+
+    checkDataFilled();
+  });
+  //
 
   function checkDataFilled() {
-    if (autocompleteLocation === "" || locationCity === "") {
+    if (autocompleteLocation === "") {
       // replace with modal later
       alert("Enter Address");
     } else if (endDate === "" || startDate === "") {
@@ -39,6 +34,7 @@ $("#createNewTrip").on("click", function() {
       url: queryURL_geo,
       method: "GET"
     }).done(function(response) {
+      // same as photoAPI KEY
       var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
       var geo = response.results[0].geometry.location;
       var geoLocation = `${geo.lat},${geo.lng}`;
@@ -48,21 +44,25 @@ $("#createNewTrip").on("click", function() {
         method: "GET"
       }).done(function(response) {
         // var bigPhotoResults = response.results.sort(function(resultA, resultB) {
-        //   return +resultB.photos[0].width - +resultA.photos[0].width;
-        // });
-        // tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
-        tripPhotoRefId = response.results[0].photos[0].photo_reference;
+        //   return parseInt(resultB.photos[0].width) - parseInt(resultA.photos[0].width);
+        // })
+         if (!response.results[0].photos){
+          tripPhotoRefId = null;
+        }
+        else {
+          // tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
+          tripPhotoRefId = response.results[0].photos[0].photo_reference;
+        }
         sendData(tripPhotoRefId);
-      });
+      }).error(function(){
+        tripPhotoRefId= null;
+      })
     });
   }
 
   function sendData(tripPhotoID) {
     var location = {
-      fullLocation: autocompleteLocation,
-      city: locationCity,
-      state: locationState,
-      zipCode: zipCode
+      fullLocation: autocompleteLocation
     };
 
     var newTrip = {
