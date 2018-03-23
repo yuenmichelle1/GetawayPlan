@@ -27,6 +27,7 @@
 
 .rest-pic, .poi-pic {
     overflow: hidden;
+    max-height: 169px;
 }
 
 .rest-pic img, .poi-pic img {
@@ -40,10 +41,10 @@
 
 .rest-name, .poi-name {
     font-family: 'Merriweather Sans', sans-serif;
-    font-size: 1.8em;
+    font-size: 1.5em;
     color: #0275d8;
     font-weight: 600;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .poi-name {
@@ -52,7 +53,7 @@
 
 .rest-address, .poi-description {
     font-family: 'Merriweather Sans', sans-serif;
-    font-size: 1em;
+    font-size: .9em;
     color: #616161;
     font-weight: 400;
 }

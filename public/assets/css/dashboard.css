@@ -1,0 +1,63 @@
+.main-container {
+    margin-top: 40px;
+}
+
+.navbar {
+    background-color: white;
+}
+.navbar-brand {
+    margin-left:10px;
+}
+.login-btn {
+    margin-right: 10px;
+}
+.weather {
+    color:white;
+
+} 
+.weather1-text, 
+.weather2-text,
+.weather3-text{
+    position: relative;
+    top: -25px;
+}
+.items {
+    width: 85%;
+    margin: 0 auto;
+    text-align: left;
+}
+.save-btn {
+    margin-right: 0px;
+}
+.todosheader {
+    margin-top: 30px;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #D5842E;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.poi-pic, .rest-pic {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.poi-links a {
+    color: #D5842E;
+    font-size: 1em;
+}
+
+.poi-btn, .rest-btn {
+    text-align: center;
+}
+
+.save-btn {
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background-color: #0275d8;
+    border: 2px solid #0275d8;
+}
