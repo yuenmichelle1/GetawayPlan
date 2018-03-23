@@ -40,9 +40,9 @@ $(function () {
     }
     var addInfoToCols = function (restInfo, photo_col, info_col) {
 
-        var restNameDiv = $("<h4>").text(restInfo["data-restname"]);
-        var restAddressDiv = $("<p>").text(restInfo["data-restaddress"]);
-        var restRatingDiv = $("<p>").text(`Rating: ${restInfo["data-restrating"]}/5`);
+        var restNameDiv = $("<h4 class='rest-name'>").text(restInfo["data-restname"]);
+        var restAddressDiv = $("<h2 class='rest-address'>").text(restInfo["data-restaddress"]);
+        var restRatingDiv = $("<h2 class='rest-rating'>").text(`Rating: ${restInfo["data-restrating"]}/5`);
 
         var imgDiv = $(`<img src=${restInfo["data-photourl"]} alt="restaurant-photo">`);
         photo_col.append(imgDiv);
@@ -52,7 +52,7 @@ $(function () {
 
     var addSaveButton = function (restInfo, select_col) {
 
-        var button = $("<button class='btn-primary saveRestaurant'>").text("SAVE");
+        var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn saveRestaurant'>").text("+ Add To My Trip");
 
         button.attr(restInfo);
         select_col.append(button);
