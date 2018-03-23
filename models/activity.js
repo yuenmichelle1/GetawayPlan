@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes){
         photo:{
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg",
+            defaultValue: "https://www.sciencedaily.com/images/2016/04/160406124740_1_900x600.jpg",
             validate: {
                 isUrl: true
             }
@@ -17,8 +17,7 @@ module.exports = function (sequelize, DataTypes){
 
         url: {
             type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg",
+            allowNull: true,
             validate: {
                 isUrl: true
             }
@@ -26,13 +25,12 @@ module.exports = function (sequelize, DataTypes){
 
         description: {
             type: DataTypes.TEXT,
-            allowNull: false,
-            defaultValue: "http://www.crosstimbersgazette.com/crosstimbersgazette/wp-content/uploads/2016/02/restaurant-generic.jpg"
+            allowNull: true
         },
         
         directions: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 isUrl: true
             }

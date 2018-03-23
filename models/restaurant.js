@@ -27,7 +27,14 @@ module.exports = function (sequelize, DataTypes){
             validate: {
                 isUrl: true
             }
-
+        },
+        
+        directions: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                isUrl: true
+            }
         }
     })
 

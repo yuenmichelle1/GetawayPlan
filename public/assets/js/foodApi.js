@@ -17,12 +17,18 @@ $(function () {
         for (var i = 0; i < 10; i++) {
             var photoRef = result[i].photos[0].photo_reference;
             var photoURL = getPhotoURLByReference(photoRef);
+
+            var locationString = `${result[i].name}+${tripAddress}`;
+            var mapQuery = locationString.replace(/,/g, "%2C").replace(/ /g, "+").replace(/\(|\)/g, "").replace(/º/g, "");
             
             var restInfo = {
                 "data-restname": result[i].name,
                 "data-restrating": result[i].rating,
                 "data-restaddress": result[i].vicinity,
                 "data-photourl": photoURL,
+
+                "data-restdirections": `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
+
                 "data-state": 0,
                 "data-restaurantid": 0
             }
@@ -43,17 +49,15 @@ $(function () {
         var restNameDiv = $("<h4 class='rest-name'>").text(restInfo["data-restname"]);
         var restAddressDiv = $("<h2 class='rest-address'>").text(restInfo["data-restaddress"]);
         var restRatingDiv = $("<h2 class='rest-rating'>").text(`Rating: ${restInfo["data-restrating"]}/5`);
-
+        var mapUrlDiv = $(`<a class='rest-direction' href=${restInfo["data-restdirections"]}>Get Directions</a>`);
         var imgDiv = $(`<img src=${restInfo["data-photourl"]} alt="restaurant-photo">`);
         photo_col.append(imgDiv);
-        info_col.append(restNameDiv, restAddressDiv, restRatingDiv);
+        info_col.append(restNameDiv, restAddressDiv, restRatingDiv, mapUrlDiv);
 
     }
 
     var addSaveButton = function (restInfo, select_col) {
-
         var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn saveRestaurant'>").text("+ Add To My Trip");
-
         button.attr(restInfo);
         select_col.append(button);
     }
@@ -80,6 +84,7 @@ $(function () {
                 address: $(this).data("restaddress"),
                 rating: $(this).data("restrating"),
                 photo: $(this).data("photourl"),
+                directions: $(this).data("restdirections"),
                 TripId: tripId
             };
       
