@@ -46,4 +46,14 @@ module.exports = function(app) {
     res.redirect("/");
   });
 
+  app.get("/selectPoi", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/activity.html"));
+  });
+
+  app.get("/selectFood", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/foodApi.html"));
+  });
+
+  
+
 };
