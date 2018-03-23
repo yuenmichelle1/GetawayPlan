@@ -11,19 +11,19 @@
                         <!-- Photo -->
                         <div class="row">
                             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                {{this.photo}}
+                                <a href="{{this.url}}"><img src="{{this.photo}}" alt="poi_image"></a>
                             </div>
                             <!-- Text -->
                             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                                 <h3 class="poi-name">{{this.name}}</h3>
                                 <p class="poi-desc">{{this.description}}</p>
                                 <br>
-                                <a href="{{this.url}}">Get Directions</a>
+                                <a href="{{this.directions}}">Get Directions</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <button class="btn btn-warning my-2 my-sm-0 nav-btn save-btn" type="button">Save</button>
+                        <button class="btn btn-warning my-2 my-sm-0 nav-btn deleteActivity save-btn" data-id="{{this.id}}" type="button">DELETE</button>
                     </div>
                 </div>
             </div>
@@ -38,20 +38,19 @@
                         <!-- Photo -->
                         <div class="row">
                             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                {{this.photo}}
+                                <img src="{{this.photo}}" alt="restaurant_image">
                             </div>
                             <!-- Text -->
                             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                                 <h3 class="rest-name">{{this.name}}</h3>
                                 <p class="rest-address">{{this.address}}</p>
-                                <p class="rest-rating">{{this.rating}}</p>
+                                <p class="rest-rating">Rating: {{this.rating}}/5</p>
                                 <br>
-                                <a href="{{this.url}}">Get Directions</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <button class="btn btn-warning my-2 my-sm-0 nav-btn save-btn" type="button">Save</button>
+                        <button class="btn btn-warning my-2 my-sm-0 nav-btn deleteRestaurant save-btn" data-id="{{this.id}}" type="button">DELETE</button>
                     </div>
                 </div>
             </div>
