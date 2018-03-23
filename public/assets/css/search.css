@@ -14,7 +14,7 @@
     margin-left: 82px;
 }
 
-.restaurant {
+.restaurant, .activity {
     margin: 0 auto;
     width: 87%;
     height: 175px;
@@ -25,11 +25,11 @@
     margin-top: 10px;
 }
 
-.rest-pic {
+.rest-pic, .poi-pic {
     overflow: hidden;
 }
 
-.rest-pic img {
+.rest-pic img, .poi-pic img {
     width: 100%;
     margin-left: -15px;
     height: 100%;
@@ -38,7 +38,7 @@
     border-bottom-left-radius: 7px;
 }
 
-.rest-name {
+.rest-name, .poi-name {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1.8em;
     color: #0275d8;
@@ -46,15 +46,22 @@
     margin-top: 30px;
 }
 
+.poi-name {
+    font-size: 1.5em;
+}
 
-.rest-address {
+.rest-address, .poi-description {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
     color: #616161;
     font-weight: 400;
 }
 
-.rest-rating {
+.poi-description {
+    font-size: .8em;
+}
+
+.rest-rating, .poi-direction {
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
     color: #D5842E;
@@ -68,7 +75,7 @@
     width: 200px;
 }
 
-.rest-btn {
+.rest-btn, .poi-btn {
     padding-top: 60px;
 }
 
