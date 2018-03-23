@@ -43,7 +43,10 @@ function displayLocationPhoto(photoRefID) {
     var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
-    $('.trip-bg').css('background-image', `url("${photoURL}")`)
+    $('.trip-bg').css('background', `url("${photoURL}") no-repeat center fixed`);
+    $('.trip-bg').css('background-size', `cover`);
+    $('.trip-bg').css('background-color', `rgba(0,0,0,.2)`);
+    $('.trip-bg').css('background-blend-mode', `overlay`);
 }
 
 function getLatandLong(tripData, time, icon) {
@@ -69,7 +72,7 @@ function displayWeather(tripData, time, geolocation, icon) {
         method: "GET"
     }).done(function(response) {
         var weatherIcon = response.currently.icon;
-        var icons = new Skycons();
+        var icons = new Skycons({"color": "white"});
         //add your weatherIcon here
         icons.set(icon, weatherIcon);
         icons.play();
