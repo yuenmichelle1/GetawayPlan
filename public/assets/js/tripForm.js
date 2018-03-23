@@ -47,10 +47,11 @@ $("#createNewTrip").on("click", function() {
         url: queryURL_pictures,
         method: "GET"
       }).done(function(response) {
-        var bigPhotoResults = response.results.sort(function(resultA, resultB) {
-          return +resultB.photos[0].width - +resultA.photos[0].width;
-        });
-        tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
+        // var bigPhotoResults = response.results.sort(function(resultA, resultB) {
+        //   return +resultB.photos[0].width - +resultA.photos[0].width;
+        // });
+        // tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
+        tripPhotoRefId = response.results[0].photos[0].photo_reference;
         sendData(tripPhotoRefId);
       });
     });
