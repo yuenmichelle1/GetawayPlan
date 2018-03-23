@@ -1,5 +1,6 @@
 $("#createNewTrip").on("click", function() {
   var userId;
+ 
   $.get("/api/user_data", function(data) {
     userId = data.id;
     console.log(userId);
@@ -12,10 +13,9 @@ $("#createNewTrip").on("click", function() {
   var zipCode = $("#postal_code").val();
   var startDate = $("#from").val();
   var endDate = $("#to").val();
-  var tripName = $("#tripName")
-    .val()
-    .trim();
+  var tripName = $("#tripName").val().trim();
   var tripPhotoRefId;
+ 
 
   checkDataFilled();
 
