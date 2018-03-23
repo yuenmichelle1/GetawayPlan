@@ -90,7 +90,7 @@ function displayWeather(tripData, time, geolocation, icon, divClass) {
 }
 
 function displayTime(cl, date, temp) {
-    $(`.${cl}`).text(`${timeConverter(date)}:${temp}°`);
+    $(`.${cl}`).html(`${timeConverter(date)}: ${temp}°F`);
 }
 
 // Returns an array of dates between the two dates
@@ -131,6 +131,6 @@ function timeConverter(UNIX_timestamp) {
     var hour = a.getHours();
     var min = a.getMinutes();
     var sec = a.getSeconds();
-    var time = month + " " + date + " " + year;
+    var time = `${month}/${date}` ;
     return time;
 }
