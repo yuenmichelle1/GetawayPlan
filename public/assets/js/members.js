@@ -41,7 +41,9 @@ $(document).ready(function() {
 
 function displayLocationPhoto(photoRefID) {
     // var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
-    var photoAPIKey = "AIzaSyBxMhiK9gIVQw4-_44ToFukjwwmJ1pmT-w";
+    // var photoAPIKey = "AIzaSyBxMhiK9gIVQw4-_44ToFukjwwmJ1pmT-w";
+    // var photoAPIKey = "AIzaSyB4NWEUkE-1dK_OTGQJKzHECzuOVyWZJFw";
+    var photoAPIKey ="AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
     $('.trip-bg').css('background', `url("${photoURL}") no-repeat center fixed`);
@@ -78,14 +80,6 @@ function displayWeather(tripData, time, geolocation, icon, divClass) {
         icons.set(icon, weatherIcon);
         icons.play();
         displayTime(divClass,response.currently.time, response.currently.apparentTemperature);
-        var weatherAndtimeDiv = `<div class="container"> 
-      ${timeConverter(response.currently.time)}
-        <div class="row">Weather: ${
-          response.currently.apparentTemperature
-        }&deg F</div>
-        <div class="row">Conditions: ${response.currently.summary}</div>
-    </div>`;
-        $(".time").append(weatherAndtimeDiv);
     });
 }
 
