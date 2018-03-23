@@ -1,13 +1,7 @@
-// route from Dashboard does not work...needs to change to just pois/new vs api/trips/pois/new = error
-// get travelinput variable from form into js for my code and restaurant
-// post route works !!
-// 
-
 $(function () {
-
-    // get tripAddress from the form user submits for trip
-    // var tripAddress = $("#autocomplete").val();
-    var tripAddress = "Chicago, IL";
+    $.get("/api/trip_data").then(function(data) {
+        var tripAddress = data.location;
+        var tripId = data.id;
     var geoApiKey = "AIzaSyBh7hRbHFAKc8vFy81Vp_OfiCY_X5gG-tk";
     var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`;
 
@@ -24,7 +18,8 @@ $(function () {
                 "data-activityurl": result[i].url,
                 "data-activitydescription": result[i].perex,
                 "data-activitydirections": `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
-                "data-state": 0
+                "data-state": 0,
+                "data-activityid": 0
             }
             var newActDiv = $("<div class='row activity'>");
             var photo_col = $("<div class='col-md-3'>");
@@ -56,45 +51,42 @@ $(function () {
 
     var saveActivity = function () {
         $(".activityOptions").on("click", ".saveActivity", function () {
-            btnstate = $(this).data("state");
+            var id;
+            var btnstate = $(this).data("state");
             if (btnstate === 0) {
                 $(this).text("SAVED");
                 $(this).data("state", 1);
-                console.log($(this).data("state"));
                 var info = {
                     name: $(this).data("activityname"),
                     photo: $(this).data("activityphoto"),
                     url: $(this).data("activityurl"),
                     description: $(this).data("activitydescription"),
                     directions: $(this).data("activitydirections"),
-                    state: 1,
-                    tripID: 1
+                    TripId: tripId
                 };
-
-                console.log(info);
-                $.post("/api/activity", info, function () {
-                });
-                console.log("after");
+                $.post("/api/activity", info, (result) => {
+                    id = result.id;
+                    $(this).data("activityid", id);
+                })
 
             } else {
                 $(this).text("SAVE");
                 $(this).data("state", 0);
-                console.log($(this).data("state"));
                 var info = {
                     name: $(this).data("activityname"),
                     photo: $(this).data("activityphoto"),
                     url: $(this).data("activityurl"),
                     description: $(this).data("activitydescription"),
                     directions: $(this).data("activitydirections"),
-                    state: 0,
-                    tripID: 1
+                    TripId: tripId
                 };
-                
-                console.log(info);
-                $.delete("/api/activity/", info, function () {
-                    // location.reload();
-                    console.log("delete is running...");
-                })
+                var id = $(this).data("activityid");
+                $.ajax({
+                    url: `/api/activity/${id}`,
+                    method: "DELETE"
+                }).then(() => {
+                    console.log("deleted");
+                });
             }
 
         });
@@ -106,9 +98,6 @@ $(function () {
         method: "GET"
     }).done(function (response) {
         var {lat, lng} = response.results[0].geometry.location;
-        // var geoLocation = `${geo.lat},${geo.lng}`
-
-    //   coordinates need to come from the geo api call
     var query = `https://api.sygictravelapi.com/1.0/en/places/list?location=${lat},${lng}&level=poi&limit=20`;
     
     $.ajax({
@@ -121,5 +110,6 @@ $(function () {
         addNewActivityRows(response);
     });
  
+});
 });
 });

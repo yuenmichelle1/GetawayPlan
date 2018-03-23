@@ -1,6 +1,7 @@
 $(function () {
-    //replace chicago with other info
-    var tripAddress = "chicago";
+    $.get("/api/trip_data").then(function(data) {
+        var tripAddress = data.location;
+        var tripId = data.id;
     var geoApiKey = "AIzaSyBh7hRbHFAKc8vFy81Vp_OfiCY_X5gG-tk"
     var googlePlaceApiKey = "AIzaSyAEXm4PX5429L96nGX_Pc_eX6BP7rO2G84"; 
     var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
@@ -12,14 +13,18 @@ $(function () {
     var addNewRestuarantRows = function (response) {
         var result = response.results;
         //change how many result to show. 20 max for one call. 60 max total (3 calls)
+
         for (var i = 0; i < 10; i++) {
             var photoRef = result[i].photos[0].photo_reference;
             var photoURL = getPhotoURLByReference(photoRef);
+            
             var restInfo = {
                 "data-restname": result[i].name,
-                "data-restrating": `Rating: ${result[i].rating}/5`,
+                "data-restrating": result[i].rating,
                 "data-restaddress": result[i].vicinity,
-                "data-photourl": photoURL
+                "data-photourl": photoURL,
+                "data-state": 0,
+                "data-restaurantid": 0
             }
             var newRestDiv = $("<div class='row restaurant'>");
             var photo_col = $("<div class='col-md-3 rest-pic'>")
@@ -34,9 +39,11 @@ $(function () {
         }
     }
     var addInfoToCols = function (restInfo, photo_col, info_col) {
-        var restNameDiv = $("<h4 class='rest-name'>").text(restInfo["data-restname"]);
-        var restAddressDiv = $("<h2 class='rest-address'>").text(restInfo["data-restaddress"]);
-        var restRatingDiv = $("<h3 class='rest-rating'>").text(restInfo["data-restrating"]);
+
+        var restNameDiv = $("<h4>").text(restInfo["data-restname"]);
+        var restAddressDiv = $("<p>").text(restInfo["data-restaddress"]);
+        var restRatingDiv = $("<p>").text(`Rating: ${restInfo["data-restrating"]}/5`);
+
         var imgDiv = $(`<img src=${restInfo["data-photourl"]} alt="restaurant-photo">`);
         photo_col.append(imgDiv);
         info_col.append(restNameDiv, restAddressDiv, restRatingDiv);
@@ -44,7 +51,9 @@ $(function () {
     }
 
     var addSaveButton = function (restInfo, select_col) {
-        var button = $("<button class='btn btn-warning my-2 my-sm-0 nav-btn login-btn saveRestaurant'>").text("+ Add To My Trip");
+
+        var button = $("<button class='btn-primary saveRestaurant'>").text("SAVE");
+
         button.attr(restInfo);
         select_col.append(button);
     }
@@ -57,23 +66,44 @@ $(function () {
 
     var saveRestaurant = function () {
         $(".diningOptions").on("click", ".saveRestaurant", function () {
-            // $(this).text("saved")
-            // $(this).toggleClass("saved");
+            var id;
+            var btnstate = $(this).data("state");
+            if (btnstate === 0) {
+                $(this).text("SAVED");
+                $(this).data("state", 1);
 
             var info = {
                 name: $(this).data("restname"),
                 address: $(this).data("restaddress"),
                 rating: $(this).data("restrating"),
                 photo: $(this).data("photourl"),
-                // replace :tripID with tripID variable
-                tripID: 1      
+                TripId: tripId
             };
       
-            $.post("/api/restaurant", info, function(){
-                location.reload();
+            $.post("/api/restaurant", info, (result) => {
+                id = result.id;
+                $(this).data("restaurantid", id);
             })
+        } else {
+            $(this).text("SAVE");
+                $(this).data("state", 0);
+                var info = {
+                    name: $(this).data("restname"),
+                    address: $(this).data("restaddress"),
+                    rating: $(this).data("restrating"),
+                    photo: $(this).data("photourl"),
+                    TripId: tripId
+                };
+                var id = $(this).data("restaurantid");
+                $.ajax({
+                    url: `/api/restaurant/${id}`,
+                    method: "DELETE"
+                }).then(() => {
+                    console.log("deleted");
+                });
+            }
 
-        })
+        });
     }
     saveRestaurant();
 
@@ -81,9 +111,8 @@ $(function () {
         url: queryURL_geo,
         method: "GET"
     }).done(function (response) {
-        var geo = response.results[0].geometry.location;
-        var geoLocation = `${geo.lat},${geo.lng}`
-        var queryURL_food = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${geoLocation}&radius=500&type=restaurant&rankby=prominence&key=${googlePlaceApiKey}`;
+        var {lat, lng} = response.results[0].geometry.location;
+        var queryURL_food = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&type=restaurant&rankby=prominence&key=${googlePlaceApiKey}`;
         $.ajax({
             url: queryURL_food,
             method: "GET"
@@ -119,5 +148,5 @@ $(function () {
         });
     });
 
-
+});
 });
