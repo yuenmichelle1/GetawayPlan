@@ -1,10 +1,83 @@
-.restaurant img {
-    height: 150px;
-    width: 200px;
-    margin: 5px;
+.navbar {
+    background-color: white;
+    float: left;
+}
+
+.container-fluid {
+    margin-top: 100px;
+}
+
+.page-title {
+    font-family: 'Playfair Display', serif;
+    color: #D5842E;
+    font-size: 4em;
+    margin-left: 82px;
 }
 
 .restaurant {
-    background: lightgrey;
-    margin:10px;
+    margin: 0 auto;
+    width: 87%;
+    height: 175px;
+    max-height: 175px;
+    background: white;
+    border: 3px solid#0000004d;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.rest-pic {
+    overflow: hidden;
+}
+
+.rest-pic img {
+    width: 100%;
+    margin-left: -15px;
+    height: 100%;
+    margin-top:0px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+.rest-name {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1.8em;
+    color: #0275d8;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+
+.rest-address {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1em;
+    color: #616161;
+    font-weight: 400;
+}
+
+.rest-rating {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1em;
+    color: #D5842E;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.saveRestaurant {
+    background-color: #D5842E;
+    border: 2px solid #D5842E;
+    width: 200px;
+}
+
+.rest-btn {
+    padding-top: 60px;
+}
+
+.more-btn {
+    margin: 0 auto;
+    width: 300px;
+}
+
+.more-div {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
