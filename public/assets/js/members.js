@@ -17,8 +17,17 @@ $(document).ready(function() {
     var startdate = new Date(tripData.startdate);
     var enddate = new Date(tripData.enddate);
     var daysArr = getDates(startdate, enddate);
+    // bgPhoto is a reference ID to a photo on google that needs to be input 
     var bgPhoto= tripData.background_photo;
-    displayLocationPhoto(bgPhoto);
+    if (bgPhoto === "") {
+         $('.trip-bg').css('background', `url("/assets/img/getaway.jpg") no-repeat center fixed`);
+        $('.trip-bg').css('background-size', `cover`);
+        $('.trip-bg').css('background-color', `rgba(0,0,0,.2)`);
+        $('.trip-bg').css('background-blend-mode', `overlay`);
+        
+    } else{
+        displayLocationPhoto(bgPhoto);
+    }
     //get Lat and Long of trip  then display data //simplifyThis
     //3 DAY FORECAST OF YOUR TRIP
     getLatandLong(tripData, daysArr[0].getTime()/1000, "icon1", "weather1-text");
@@ -40,12 +49,13 @@ $(document).ready(function() {
 });
 
 function displayLocationPhoto(photoRefID) {
-    // var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+    // first key
+    var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
     // var photoAPIKey = "AIzaSyBxMhiK9gIVQw4-_44ToFukjwwmJ1pmT-w";
     // var photoAPIKey = "AIzaSyB4NWEUkE-1dK_OTGQJKzHECzuOVyWZJFw";
-    var photoAPIKey ="AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
+    // backup key
+    // var photoAPIKey ="AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
-    var imgDiv = $(`<img src=${photoURL} alt="location-photo">`);
     $('.trip-bg').css('background', `url("${photoURL}") no-repeat center fixed`);
     $('.trip-bg').css('background-size', `cover`);
     $('.trip-bg').css('background-color', `rgba(0,0,0,.2)`);
@@ -84,7 +94,7 @@ function displayWeather(tripData, time, geolocation, icon, divClass) {
 }
 
 function displayTime(cl, date, temp) {
-    $(`.${cl}`).html(`${timeConverter(date)}: ${temp}°F`);
+    $(`.${cl}`).html(`${timeConverter(date)}: ${Math.round(temp)}°F`);
 }
 
 // Returns an array of dates between the two dates
@@ -105,26 +115,13 @@ var getDates = function(startDate, endDate) {
 
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
-    var months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    ];
+    var months = [ "Jan",  "Feb",  "Mar", "Apr", "May","Jun", "Jul", "Aug", "Sep","Oct","Nov", "Dec"];
     var year = a.getFullYear();
     var month = months[a.getMonth()];
     var date = a.getDate();
     var hour = a.getHours();
     var min = a.getMinutes();
     var sec = a.getSeconds();
-    var time = `${month}/${date}` ;
+    var time = `${month} ${date}` ;
     return time;
 }
