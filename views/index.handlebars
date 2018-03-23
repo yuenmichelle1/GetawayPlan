@@ -1,7 +1,58 @@
+<style>
+    .restaurant {
+        margin: 0 auto;
+        width: 87%;
+        height: 175px;
+        max-height: 175px;
+        background: white;
+        border: 3px solid#0000004d;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .rest-pic{
+        overflow: hidden;
+    }
+
+    .pois-pic{
+        margin-bottom: 10px;
+    }
+
+    .rest-pic img {
+        width: 150px;
+        height: 150px;
+        margin-top:0px;
+    }
+
+    .rest-name, .poi-name {
+        font-family: 'Merriweather Sans', sans-serif;
+        font-size: 1.1em;
+        color: #0275d8;
+        font-weight: 600;
+        margin-top: 30px;
+    }
+
+    .rest-address, .poi-desc {
+        font-family: 'Merriweather Sans', sans-serif;
+        font-size: 0.8em;
+        color: #616161;
+        font-weight: 400;
+    }
+
+    .rest-rating {
+        font-family: 'Merriweather Sans', sans-serif;
+        font-size: 1em;
+        color: #D5842E;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+
+</style>
 {{!-- display saved events --}}
-<div class="row">
+<div class="row items">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h2 class="sub-title-text">Saved Points of Interest</h2>
+        <h2 class="sub-title-text todosheader">Saved Points of Interest</h2>
+        <hr>
         <div class="row saved-pois">
             {{#each activities}}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -10,14 +61,14 @@
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <!-- Photo -->
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pois-pic">
                                 <a href="{{this.url}}"><img src="{{this.photo}}" alt="poi_image"></a>
                             </div>
                             <!-- Text -->
                             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                                 <h3 class="poi-name">{{this.name}}</h3>
                                 <p class="poi-desc">{{this.description}}</p>
-                                <br>
+                                {{!-- <br> --}}
                                 <a href="{{this.directions}}">Get Directions</a>
                             </div>
                         </div>
@@ -28,8 +79,9 @@
                 </div>
             </div>
             {{/each}}
-        </div>
-        <h2 class="sub-title-text">Saved Restaurants</h2>
+        </div><br><br>
+        <h2 class="sub-title-text todosheader">Saved Restaurants</h2>
+        <hr>
         <div class="row saved-rest">
             {{#each restaurants}}
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -37,7 +89,7 @@
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <!-- Photo -->
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 rest-pic">
                                 <img src="{{this.photo}}" alt="restaurant_image">
                             </div>
                             <!-- Text -->
