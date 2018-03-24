@@ -57,7 +57,7 @@ $(document).ready(function() {
             });
         } else {
           console.log(data)
-          $(".msg").text(data.errors[0].message);
+          $(".msg").text("Signup failed.");
           $("#alert").fadeIn(500);
         }
         // If there's an error, handle it by throwing up a boostrap alert
