@@ -102,7 +102,7 @@ module.exports = function (app) {
     app.get("/api/trip_data", function(req,res){
         db.Trip.findAll({
             where:{
-                UserId: req.User.id;
+                UserId: req.User.id
             }
         }).then(function(trip){
             res.json(trip.reverse()[0]);
