@@ -6,7 +6,9 @@ $(function () {
         //first key
         // var googlePlaceApiKey = "AIzaSyAEXm4PX5429L96nGX_Pc_eX6BP7rO2G84";
         // replacement key
-        var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+        // var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+        //backup key
+        var googlePlaceApiKey = "AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
         var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
         //comment out the return in the getPhotoURLByReference function to save api key usage when testing
         var getPhotoURLByReference = function (ref) {
