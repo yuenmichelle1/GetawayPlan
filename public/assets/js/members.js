@@ -50,11 +50,11 @@ $(document).ready(function() {
 
 function displayLocationPhoto(photoRefID) {
     // first key
-    var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+    // var photoAPIKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
     // var photoAPIKey = "AIzaSyBxMhiK9gIVQw4-_44ToFukjwwmJ1pmT-w";
     // var photoAPIKey = "AIzaSyB4NWEUkE-1dK_OTGQJKzHECzuOVyWZJFw";
     // backup key
-    // var photoAPIKey ="AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
+    var photoAPIKey ="AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
     var photoURL = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photoreference=${photoRefID}&key=${photoAPIKey}`;
     $('.trip-bg').css('background', `url("${photoURL}") no-repeat center fixed`);
     $('.trip-bg').css('background-size', `cover`);

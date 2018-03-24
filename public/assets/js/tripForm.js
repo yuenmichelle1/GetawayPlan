@@ -36,7 +36,9 @@ $("#createNewTrip").on("click", function () {
       method: "GET"
     }).done(function (response) {
       // same as photoAPI KEY
-      var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+      // var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
+      //backup
+      var googlePlaceApiKey= "AIzaSyDlhX_mMtwzLxh19L43QpJEV41mRBCNP0k";
       var geo = response.results[0].geometry.location;
       var geoLocation = `${geo.lat},${geo.lng}`;
       var queryURL_pictures = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${geoLocation}&radius=500&rankby=prominence&key=${googlePlaceApiKey}`;
