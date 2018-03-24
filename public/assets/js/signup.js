@@ -14,20 +14,25 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("click", function(event) {
     event.preventDefault();
-    var userData = {
-      email: emailInput.val().trim(),
-      password: passwordInput.val().trim(),
-      phoneNumber: validatePhoneNumber(phoneInput.val().trim()),
-      wantsTextNotification: $("input.exampleCheck1").val()
-    };
-    console.log(userData);
-    if (!userData.email || !userData.password) {
-      return;
+    if ($("#agree").is(':checked')){
+      var userData = {
+        email: emailInput.val().trim(),
+        password: passwordInput.val().trim(),
+        phoneNumber: validatePhoneNumber(phoneInput.val().trim()),
+        wantsTextNotification: $("input.exampleCheck1").val()
+      };
+      
+      if (!userData.email || !userData.password) {
+        notFilled();
+      }
+      // If we have an email and password, run the signUpUser function
+      signUpUser(userData.email, userData.password, userData.phoneNumber, userData.wantsTextNotification);
+      emailInput.val("");
+      passwordInput.val("");
+    } else {
+      $("#alert .msg").text("Please read through Terms and conditions and agree. ");
+      $("#alert").fadeIn(500);
     }
-    // If we have an email and password, run the signUpUser function
-    signUpUser(userData.email, userData.password, userData.phoneNumber, userData.wantsTextNotification);
-    emailInput.val("");
-    passwordInput.val("");
   });
 
   // Does a post to the signup route. If succesful, we are redirected to the members page
@@ -64,5 +69,6 @@ function handleLoginErr(err) {
   $("#alert .msg").text(err.responseJSON);
   $("#alert").fadeIn(500);
 }
+
 
 });
