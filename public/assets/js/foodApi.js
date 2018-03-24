@@ -48,8 +48,8 @@ $(function () {
 
             var restNameDiv = $("<h4 class='rest-name'>").text(restInfo["data-restname"]);
             var restAddressDiv = $("<h2 class='rest-address'>").text(restInfo["data-restaddress"]);
-            var restRatingDiv = $("<h2 class='rest-rating'>").text(`Rating: ${restInfo["data-restrating"]}/5`);
-            var mapUrlDiv = $(`<a class='rest-direction' href=${restInfo["data-restdirections"]}>Get Directions</a>`);
+            var restRatingDiv = $("<h2 class='rest-rating'>").text(`Google Rating: ${restInfo["data-restrating"]}/5`);
+            var mapUrlDiv = $(`<a class='rest-direction' target='_blank' href=${restInfo["data-restdirections"]}>Info & Directions</a>`);
             var imgDiv = $(`<img src=${restInfo["data-photourl"]} alt="restaurant-photo">`);
             photo_col.append(imgDiv);
             info_col.append(restNameDiv, restAddressDiv, restRatingDiv, mapUrlDiv);

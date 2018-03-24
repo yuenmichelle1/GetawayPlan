@@ -37,7 +37,7 @@ $(function () {
             var imgDiv = $(`<a href=${activityInfo["data-activityurl"]}><img src=${activityInfo["data-activityphoto"]} alt="activity-photo">`);
             var actNameDiv = $("<h4 class='poi-name'>").text(activityInfo["data-activityname"]);
             var actDescDiv = $("<p class='poi-description'>").text(activityInfo["data-activitydescription"]);
-            var mapUrlDiv = $(`<a class='poi-direction' href=${activityInfo["data-activitydirections"]}>Get Directions</a>`);
+            var mapUrlDiv = $(`<a class='poi-direction' target='_blank' href=${activityInfo["data-activitydirections"]}>Google Map Info</a>`);
             photo_col.append(imgDiv);
             info_col.append(actNameDiv, actDescDiv, mapUrlDiv);
         }

@@ -25,7 +25,7 @@
                                 <h3 class="poi-name">{{this.name}}</h3>
                                 <p class="poi-description">{{this.description}}</p>
                                 {{!-- <br> --}}
-                                <span class="poi-links"><a href="{{this.url}}">More Info</a>    |    <a href="{{this.directions}}">Get Directions</a></span>
+                                <span class="poi-links"><a href="{{this.url}}" target="_blank">More Info</a>    <span style="color: #616161">&</span>    <a href="{{this.directions}}" target="_blank">Directions</a></span>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 poi-btn">
                                 <button class="btn btn-warning my-2 my-sm-0 nav-btn deleteActivity save-btn" data-id="{{this.id}}" type="button">Remove From Trip</button>
@@ -52,7 +52,9 @@
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 rest-info">
                                 <h3 class="rest-name">{{this.name}}</h3>
                                 <p class="rest-address">{{this.address}}</p>
-                                <span class="rest-rating">Rating: {{this.rating}}/5    |    <a class="rest-direction" href="{{this.directions}}">Get Directions</a></span>
+                                <span class="rest-rating-title">Rating:</span><span class="rest-rating"> {{this.rating}}/5</span>
+                                <br>
+                                <span class="rest-dir"><a class="rest-direction" target="_blank" href="{{this.directions}}">More Info <span style="color:#616161">&</span> Directions</a></span>
                                 <br>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 rest-btn">

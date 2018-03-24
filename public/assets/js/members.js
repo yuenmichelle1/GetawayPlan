@@ -97,7 +97,7 @@ function displayWeather(tripData, time, geolocation, icon, divClass) {
 }
 
 function displayTime(cl, date, temp) {
-    $(`.${cl}`).html(`${timeConverter(date)}: ${Math.round(temp)}°F`);
+    $(`.${cl}`).html(`${timeConverter(date)}  ${Math.round(temp)}°F`);
 }
 
 // Returns an array of dates between the two dates
