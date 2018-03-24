@@ -47,14 +47,22 @@ $("#createNewTrip").on("click", function () {
         if (!response.results[0].photos) {
           tripPhotoRefId = null;
         } else {
-          // tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
-          tripPhotoRefId = response.results[0].photos[0].photo_reference;
+          var bigPhotoResults =response.results.filter(checkPhotoWidth);
+          tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
+          // tripPhotoRefId = response.results[0].photos[0].photo_reference;
         }
         sendData(tripPhotoRefId);
       }).error(function () {
         tripPhotoRefId = null;
       })
     });
+  }
+
+  //flter out results to get the most first with 
+  function checkPhotoWidth(arrayEl){
+    if (arrayEl.photos){
+      return parseInt(arrayEl.photos[0].width) >= 2000;
+    }
   }
 
   function sendData(tripPhotoID) {

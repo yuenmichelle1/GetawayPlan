@@ -3,7 +3,10 @@ $(function () {
         var tripAddress = data.location;
         var tripId = data.id;
         var geoApiKey = "AIzaSyBh7hRbHFAKc8vFy81Vp_OfiCY_X5gG-tk"
-        var googlePlaceApiKey = "AIzaSyAEXm4PX5429L96nGX_Pc_eX6BP7rO2G84";
+        //first key
+        // var googlePlaceApiKey = "AIzaSyAEXm4PX5429L96nGX_Pc_eX6BP7rO2G84";
+        // replacement key
+        var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
         var queryURL_geo = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripAddress}&key=${geoApiKey}`
         //comment out the return in the getPhotoURLByReference function to save api key usage when testing
         var getPhotoURLByReference = function (ref) {
