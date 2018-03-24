@@ -44,7 +44,7 @@
     font-size: 1.5em;
     color: #0275d8;
     font-weight: 600;
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 .poi-name {
@@ -59,15 +59,23 @@
 }
 
 .poi-description {
-    font-size: .8em;
+    font-size: .9em;
+}
+
+.rest-rating-title {
+    color: #616161;
+    font-size: .9em
 }
 
 .rest-rating, .poi-direction {
     font-family: 'Merriweather Sans', sans-serif;
-    font-size: 1em;
+    font-size: .9em;
     color: #D5842E;
     font-weight: 400;
-    margin-top: 20px;
+}
+
+.poi-direction {
+    font-size: 1em;
 }
 
 .saveRestaurant {
