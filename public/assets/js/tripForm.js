@@ -1,4 +1,4 @@
-$("#createNewTrip").on("click", function() {
+$("#createNewTrip").on("click", function () {
   var userId;
   var autocompleteLocation = $("#autocomplete").val();
   var startDate = $("#from").val();
@@ -6,7 +6,7 @@ $("#createNewTrip").on("click", function() {
   var tripName = $("#tripName").val().trim();
   var tripPhotoRefId;
 
-  $.get("/api/user_data", function(data) {
+  $.get("/api/user_data", function (data) {
     userId = data.id;
     console.log(userId);
 
@@ -26,6 +26,7 @@ $("#createNewTrip").on("click", function() {
       grabBGImg();
     }
   }
+
   function grabBGImg() {
     // grab geolocation
     var geoApiKey = "AIzaSyCrxhIkepDpKvWOFxZo5ypgb1OBpf7hcsw";
@@ -33,7 +34,7 @@ $("#createNewTrip").on("click", function() {
     $.ajax({
       url: queryURL_geo,
       method: "GET"
-    }).done(function(response) {
+    }).done(function (response) {
       // same as photoAPI KEY
       var googlePlaceApiKey = "AIzaSyBK99ou2DEGTdr67L12tIAc0YGgPyCEuIg";
       var geo = response.results[0].geometry.location;
@@ -42,22 +43,16 @@ $("#createNewTrip").on("click", function() {
       $.ajax({
         url: queryURL_pictures,
         method: "GET"
-      }).done(function(response) {
-        var bigPhotoResults = response.results.sort(function(resultA, resultB) {
-          if (resultA.photos && resultB.photos){
-            return parseInt(resultB.photos[0].width) - parseInt(resultA.photos[0].width);
-          }  
-        })
-         if (!response.results[0].photos){
+      }).done(function (response) {
+        if (!response.results[0].photos) {
           tripPhotoRefId = null;
-        }
-        else {
+        } else {
           // tripPhotoRefId = bigPhotoResults[0].photos[0].photo_reference;
           tripPhotoRefId = response.results[0].photos[0].photo_reference;
         }
         sendData(tripPhotoRefId);
-      }).error(function(){
-        tripPhotoRefId= null;
+      }).error(function () {
+        tripPhotoRefId = null;
       })
     });
   }
@@ -78,7 +73,7 @@ $("#createNewTrip").on("click", function() {
     $.ajax("/api/trip", {
       type: "POST",
       data: newTrip
-    }).then(function() {
+    }).then(function () {
       console.log("new trip made");
       window.location.href = "/api/trip/dashboard";
     });
@@ -87,23 +82,23 @@ $("#createNewTrip").on("click", function() {
 
 var dateFormat = "mm/dd/yy",
   from = $("#from")
-    .datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      numberOfMonths: 3
-    })
-    .on("change", function() {
-      to.datepicker("option", "minDate", getDate(this));
-    }),
+  .datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    numberOfMonths: 3
+  })
+  .on("change", function () {
+    to.datepicker("option", "minDate", getDate(this));
+  }),
   to = $("#to")
-    .datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      numberOfMonths: 3
-    })
-    .on("change", function() {
-      from.datepicker("option", "maxDate", getDate(this));
-    });
+  .datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    numberOfMonths: 3
+  })
+  .on("change", function () {
+    from.datepicker("option", "maxDate", getDate(this));
+  });
 
 function getDate(element) {
   var date;
@@ -137,8 +132,7 @@ function initAutocomplete() {
   // location types.
   autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */
-    (document.getElementById("autocomplete")),
-    {
+    (document.getElementById("autocomplete")), {
       types: ["geocode"]
     }
   );
@@ -152,7 +146,7 @@ function initAutocomplete() {
 // as supplied by the browser's 'navigator.geolocation' object.
 function geolocate() {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       var geolocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
