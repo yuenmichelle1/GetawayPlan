@@ -1,7 +1,26 @@
-# GetawayPlan
+# [GetAway Application](https://quiet-waters-49992.herokuapp.com/home)
 
-## Motivation?
- For the solo traveler who loves travelling but hates planning. Let us do the planning for you (to some extent)
+### Problem
+You LOVE to travel….but HATE all the planning that comes along with it? Planning out your days on where to go / what to eat, can not only be time consuming, but frustrating when you don't know your options.
 
-## How it works?
-  User enters the types of activities they like to do when they travel and whether or not they are adventurous or not (when it comes to food/activities/etc), they also enter the days they will be vacationing and where they are going. The app provides them activities and restaurants that user can go to, user will click on activities they like and the travel app will schedule it for you (can do it randomly or user can pick when to do a certain activity)
+### Solution 
+The GetAway Application is desgined to provide users with the highest rated points of interest and restaurants in an area, so users don't have to waste their time looking/searching for the perfect vacation!
+
+### How it works
+1. The user signs up for an account
+1. The user provides the location and dates of their Getaway!
+1. The GetAway application allows the user to search for Points of Interest or Restaurants in the specified area
+1. Looking through the options given, the user can Add/Remove from trip with just the click of a button
+1. All saved options are displayed on user dashboard
+
+### Demo 
+![Demo](/public/assets/img/demo.gif)
+
+### Design Process
+![Design](/public/assets/img/design.png)
+
+### Team Otters
+* [Sean Arca](https://github.com/sean-arca)
+* [Michelle Yuen](https://github.com/yuenmichelle1)
+* [Quan Gao](https://github.com/QuanGao)
+* [Amy Carrillo](https://github.com/acarrillo4)
